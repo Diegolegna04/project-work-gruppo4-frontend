@@ -1,0 +1,53 @@
+.main {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%;
+    background-color: #cf9a84;
+    padding: 0.6rem;
+}
+
+.sedi {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.orariB {
+    display: flex;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+.orariL {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.h2 {
+    font-weight: normal;
+    margin-bottom: 1.25rem;
+    font-size: 1.6rem;
+}
+
+.p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
