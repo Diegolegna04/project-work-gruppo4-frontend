@@ -1,6 +1,8 @@
 .page {
     display: flex;
     flex-direction: row;
+    padding-top: 3.75rem;
+    padding-bottom: 3.75rem;
 }
 
 .img {
@@ -26,4 +28,114 @@
 .testo {
     text-align: center;
     line-height: 1.5rem;
+}
+
+.button::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 1.5rem;
+    background-color: #d8a9b3;
+    box-shadow: inset 0 0 12px rgba(216, 169, 179, 0.44);
+    z-index: -1;
+}
+
+.button {
+    margin: 2rem;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #f4f0ff;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    width: 200px;
+}
+
+.button:hover {
+    font-weight: bold;
+}
+
+.button::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #c2b2c6;
+    box-shadow: inset 0 0 12px rgba(194, 178, 198, 0.44);
+    border-radius: 1.5rem;
+    opacity: 0;
+    z-index: -1;
+    transition: all 0.3s ease-in;
+}
+
+.button:hover::after {
+    opacity: 1;
+}
+
+.button-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 1.5rem;
+    z-index: -1;
+}
+
+.button-border::before {
+    content: "";
+    position: absolute;
+    border-radius: 1.5rem;
+    padding: 1px;
+    inset: 0;
+    background-color: #d8a9b3;
+    pointer-events: none;
+}
+
+.container2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 6px 2px;
+}
+
+.orari {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    padding-top: 2.2rem;
+    width: 400px;
+    height: 400px;
+    background-color: #f3bc9f;
+}
+
+.orari h3 {
+    font-weight: lighter;
+    font-size: xx-large;
+}
+
+.immagine {
+    display: flex;
+    width: 400px;
+    height: 400px;
+    background-color: #8fa1c7;
+}
+
+.sedi {
+    display: flex;
+    width: 400px;
+    height: 400px;
+    background-color: #bbbbbb;
 }
