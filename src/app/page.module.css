@@ -1,0 +1,29 @@
+.page {
+    display: flex;
+    flex-direction: row;
+}
+
+.img {
+    width: 50%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    max-width: 36.97rem;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.container h1{
+    font-weight: normal;
+}
+
+.testo {
+    text-align: center;
+    line-height: 1.5rem;
+}

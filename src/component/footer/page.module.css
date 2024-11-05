@@ -63,3 +63,16 @@
     color: black;
     padding: 2rem;
 }
+
+.customFooter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    background-color: black;
+    color: #bbb;
+    opacity: .8;
+    padding: 0.125rem;
+    font-size: 0.875rem;
+}

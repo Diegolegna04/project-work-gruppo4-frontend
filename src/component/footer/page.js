@@ -21,6 +21,9 @@ export default function Footer() {
             <div className={classes.iva}>
                 P.I. 03468950120
             </div>
+            <div className={classes.customFooter}>
+                Informazioni Legali | Privacy Policy e Cookie Policy
+            </div>
         </div>
     )
 }
