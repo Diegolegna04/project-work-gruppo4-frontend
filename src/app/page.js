@@ -1,5 +1,6 @@
 import styles from "./page.module.css";
 import Image from "next/image";
+import giacomo from "../img/Giacomo-1920w.jpg";
 
 export default function Home() {
     return (
@@ -30,7 +31,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div>
-                    <img src="/public/images/Giacomo-1920w.jpg" alt="Giacomo Aceti"/>
+                    <Image src={giacomo} alt="Giacomo Aceti"/>
                 </div>
             </div>
             <div className={styles.container2}>
