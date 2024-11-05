@@ -10,7 +10,7 @@ export default function Header() {
                 <p className={classes.h1}>Contatti</p>
             </div>
             <div className={classes.login}>
-                <Link href={'loginRegistrazione'}>Login / Registrati</Link>
+                <Link href={'/loginRegistrazione'}>Login / Registrati</Link>
             </div>
         </div>
     )
