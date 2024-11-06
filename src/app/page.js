@@ -1,6 +1,7 @@
 import styles from "./page.module.css";
 import Image from "next/image";
 import giacomo from "../img/Giacomo-1920w.jpg";
+import marmellata from "../img/marmellate.jpg.webp";
 
 export default function Home() {
     return (
@@ -18,8 +19,8 @@ export default function Home() {
                     16 anni, iniziata con un percorso nella scuola alberghiera di Stresa e concluso con il corso
                         superiore di pasticceria di Alma.</span>
                     <span className={styles.testo}>Accanto a me, uno staff giovane e preparato. Formo personalmente il mio team trasmettendo valori per
-                    me fondamentali in questo lavoro: <span className={styles.bold}>Divertimento, Passione, Ricercatezza, Innovazione e Attenzione al
-                    dettaglio.</span></span>
+                    me fondamentali in questo lavoro: <b>Divertimento, Passione, Ricercatezza, Innovazione e Attenzione al
+                    dettaglio.</b></span>
                     <span className={styles.testo}>C’est la Vie è un luogo capace di sorprendere per l’amore trasmesso attraverso l’arte della
                     pasticceria, ma anche per l’accoglienza informale: “Ci piace coinvolgere il cliente e trasmettere la
                     nostra passione”. A fare la differenza è anche la location di Via Carlo Croce. Già dall’esterno è
@@ -30,16 +31,32 @@ export default function Home() {
                         <span className={styles.buttonBorder}>Chiamaci</span>
                     </div>
                 </div>
-                <div>
-                    <Image src={giacomo} alt="Giacomo Aceti"/>
+                <div className={styles.imageContainer}>
+                    <Image src={giacomo} alt="Giacomo Aceti" className={styles.immagine}/>
                 </div>
             </div>
             <div className={styles.container2}>
                 <div className={styles.orari}>
-                    <h3>Orari di apertura</h3>
-
+                    <div className={styles.containerOrari}>
+                        <h3>Orari di apertura</h3>
+                        <div className={styles.orariDiv2}>
+                            <div>
+                                <p>Lunedì</p>
+                                <p>Mar - Ven</p><br/>
+                                <p>Sab - Dom</p>
+                            </div>
+                            <div className={styles.ora}>
+                                <p>Chiuso</p>
+                                <p>08:00 - 13:00<br/>14:30 - 19:00</p>
+                                <p>14:30 - 19:00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.marmContainer}>
+                        <Image src={marmellata} alt={"marmellata c'est la vie"} className={styles.marm}/>
+                    </div>
                 </div>
-                <div className={styles.immagine}>
+                <div className={styles.immagine2}>
 
                 </div>
                 <div className={styles.sedi}>
