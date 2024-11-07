@@ -1,4 +1,11 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .page {
+    width: 90%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -23,7 +30,7 @@
     align-items: center;
     padding: 1rem;
     max-width: 50%;
-    justify-content: space-between;
+    font-family: Montserrat, serif;
 }
 
 .container h1 {
@@ -36,142 +43,137 @@
     line-height: 1.5rem;
 }
 
-.button::before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    border-radius: 1.5rem;
-    background-color: #d8a9b3;
-    box-shadow: inset 0 0 12px rgba(216, 169, 179, 0.44);
-    z-index: -1;
-}
-
-.button {
+.container button {
     margin: 2rem;
     padding: 1rem 2rem;
-    border-radius: 0.5rem;
+    border-radius: 5rem;
     border: none;
     font-size: 1rem;
     font-weight: 400;
-    color: #f4f0ff;
+    background-color: #f3bc9f;
     text-align: center;
     position: relative;
     cursor: pointer;
     width: 200px;
+    transition: transform 0.1s ease-in-out;
 }
-
-.button:hover {
-    font-weight: bold;
-}
-
-.button::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #c2b2c6;
-    box-shadow: inset 0 0 12px rgba(194, 178, 198, 0.44);
-    border-radius: 1.5rem;
-    opacity: 0;
-    z-index: -1;
-    transition: all 0.3s ease-in;
-}
-
-.button:hover::after {
-    opacity: 1;
-}
-
-.button-border {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    border-radius: 1.5rem;
-    z-index: -1;
-}
-
-.button-border::before {
-    content: "";
-    position: absolute;
-    border-radius: 1.5rem;
-    padding: 1px;
-    inset: 0;
-    background-color: #d8a9b3;
-    pointer-events: none;
-}
-
-.container2 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 6px 2px;
-}
-
-.orari {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: center;
-    align-items: center;
-    padding-top: 2.2rem;
-}
-
-.orari h3 {
-    font-weight: lighter;
-    font-size: xx-large;
+.container button:hover {
+    font-weight: 500;
+    transform: scale(1.05);
 }
 
 .immagine {
     width: 100%;
-    height: auto;
+    height: 40rem;
     object-fit: cover;
+    object-position: 50% 5%;
 }
 
-.sedi {
-    display: flex;
-    width: 400px;
-    height: 400px;
-    background-color: #bbbbbb;
-}
 
-.immagine2 {
-    display: flex;
-    width: 400px;
-    height: 400px;
-    background-color: #da5353;
-}
 
-.orariDiv2 {
+
+
+
+
+.container2 {
+    width: 90%;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 6px 2px;
+    font-family: Montserrat, serif;
+    font-size: 16px;
+}
+
+.primaSezione {
+    height: 40rem;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    max-width: 15.5rem;
+    align-items: center;
+    padding-top: 2.2rem;
+}
+
+.orari {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.orari h1 {
+    font-weight: 400;
+}
+
+.orariApertura {
     text-align: center;
 }
 
-.orariDiv2 p {
-    margin-top: 1rem;
-    margin-right: 2rem;
+.columnsContainer {
+    display: flex;
+    padding-top: 1rem;
+    justify-content: space-around;
+}
+.columnsContainer p {
+    padding: 0.5rem;
+    line-height: 1.5rem;
 }
 
-.marm {
-    max-width: 50%;
-    height: auto;
-}
 
-.marmContainer {
+.secondaSezione {
+    height: 40rem;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
+    padding-top: 2.2rem;
+}
+
+.sezione2_immagine2 {
+    width: 85%;
+}
+
+
+.terzaSezione {
+    height: 40rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2.2rem;
+}
+
+.sezione2_immagine3 {
+    scale: 0.85;
+}
+
+.sedi {
+    width: 100%;
+    height: 50%;
+    padding-left: 2rem;
+}
+.sedi h1 {
+    font-weight: 400;
+    padding-bottom: 1.5rem;
+}
+.sedi p {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.sedi button {
+    margin-top: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 5rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: 400;
+    background-color: #f3bc9f;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    width: 200px;
+    transition: transform 0.1s ease-in-out;
+}
+.sedi button:hover {
+    font-weight: 500;
+    transform: scale(1.05);
 }

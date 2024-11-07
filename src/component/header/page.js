@@ -1,7 +1,6 @@
-"use client";
-import {useState} from 'react';
 import classes from './page.module.css';
 import Link from "next/link";
+import React from "react";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
