@@ -1,17 +1,16 @@
-import classes from './page.module.css';
+import styles from './page.module.css';
 import Link from "next/link";
+import React from "react";
 
 export default function Header() {
     return (
-        <div className={classes.header}>
-            <div className={classes.container}>
-                <Link href={"/"} className={classes.h1}>Home</Link>
-                <Link href={"/torte"} className={classes.h1}>Torte</Link>
-                <Link href={"/contatti"} className={classes.h1}>Contatti</Link>
-            </div>
-            <div className={classes.login}>
-                <Link href={'/loginRegistrazione'}>Login / Registrati</Link>
-            </div>
-        </div>
-    )
+        <header className={styles.header}>
+            <nav className={styles.centerLinks}>
+                <Link href="/" className={styles.navLink}>Home</Link>
+                <Link href="/torte" className={styles.navLink}>Torte</Link>
+                <Link href="/contatti" className={styles.navLink}>Contatti</Link>
+            </nav>
+            <Link href="/loginRegistrazione" className={styles.login}>Login</Link>
+        </header>
+    );
 }
