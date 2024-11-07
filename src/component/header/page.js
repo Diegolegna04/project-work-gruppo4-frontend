@@ -1,7 +1,15 @@
+"use client";
+import {useState} from 'react';
 import classes from './page.module.css';
 import Link from "next/link";
 
 export default function Header() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
         <div className={classes.header}>
             <div className={classes.container}>
@@ -12,6 +20,18 @@ export default function Header() {
             <div className={classes.login}>
                 <Link href={'/loginRegistrazione'}>Login / Registrati</Link>
             </div>
+            <div className={classes.hamburger} onClick={toggleMenu}>
+                <div className={`${classes.line} ${isOpen ? classes.open : ''}`}></div>
+                <div className={`${classes.line} ${isOpen ? classes.open : ''}`}></div>
+                <div className={`${classes.line} ${isOpen ? classes.open : ''}`}></div>
+            </div>
+            {isOpen && (
+                <nav className={classes.mobileMenu}>
+                    <Link href={"/"} className={classes.mobileLink}>Home</Link>
+                    <Link href={"/torte"} className={classes.mobileLink}>Torte</Link>
+                    <Link href={"/contatti"} className={classes.mobileLink}>Contatti</Link>
+                </nav>
+            )}
         </div>
-    )
+    );
 }

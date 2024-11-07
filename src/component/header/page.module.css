@@ -37,3 +37,110 @@
     border: 1px solid black;
     cursor: pointer;
 }
+
+/* Hamburger Menu Styles */
+.hamburger {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.line {
+    width: 30px;
+    height: 3px;
+    background-color: black;
+    margin: 4px 0;
+    transition: transform 0.3s ease;
+}
+
+.noScroll {
+    overflow: hidden; /* Prevent scrolling */
+    height: 100%; /* Ensure full height is maintained */
+
+    .mobileMenu {
+        display: none; /* Hide mobile menu by default */
+    }
+
+    .mobileLink {
+        display: none; /* Hide mobile menu links */
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        display: none; /* Hide the original menu on mobile */
+    }
+
+    .hamburger {
+        display: flex; /* Show hamburger icon */
+        margin-left: auto; /* Align to the right */
+        padding-right: 20px; /* Add some padding */
+    }
+
+    .mobileMenu {
+        display: flex; /* Show mobile menu when opened */
+        flex-direction: column;
+        position: absolute;
+        top: 6rem; /* Position below the header */
+        right: 0;
+        background-color: #f3bc9f;
+        width: 100%;
+        animation: slideDown 0.3s ease-in-out forwards; /* Animation for opening */
+        z-index: 10; /* Ensure it appears above other elements */
+    }
+
+    .mobileLink {
+        padding: 15px;
+        text-align: center;
+        color: black;
+        border-top: 1px solid #ddd; /* Optional separation between links */
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .mobileLink:hover {
+        background-color: #ddd; /* Change background on hover */
+    }
+
+}
+
+@media (min-width: 768px) {
+    .mobileMenu {
+        display: none; /* Hide mobile menu on desktop */
+    }
+
+    .mobileLink {
+        display: none; /* Hide mobile menu links */
+    }
+}
+
+/* Animation for mobile menu opening */
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Styles for opened lines in hamburger icon */
+.open {
+    transform-origin: center;
+    transition-duration: 0.3s;
+}
+
+.open:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.open:nth-child(2) {
+    opacity: 0; /* Hide the middle line when open */
+}
+
+.open:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}

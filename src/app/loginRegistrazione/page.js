@@ -1,12 +1,57 @@
 "use client"; // Assicurati di avere questa direttiva se stai usando il rendering lato client
 
-import {useState} from 'react';
 import classes from './page.module.css';
 import Image from "next/image"; // Importa il tuo file CSS
 import img1 from '../../img/img1.jpg';
 import img2 from '../../img/img2.jpg';
 
+
 const LoginSignUp = () => {
+    const Login = async () => {
+        const email = e.addEventListener.email.value || '';
+        const password = e.addEventListener.password.value || '';
+        const response = await fetch('http://localhost:8080/auth/login', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email,
+                password
+            }),
+        });
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message);
+        }
+    };
+
+    const SignUp = async () => {
+        const nome = e.addEventListener.nome.value || '';
+        const cognome = e.addEventListener.cognome.value || '';
+        const email = e.addEventListener.email.value || '';
+        const telefono = e.addEventListener.telefono.value || '';
+        const password = e.addEventListener.password.value || '';
+        const response = await fetch('http://localhost:8080/auth/register', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nome,
+                cognome,
+                email,
+                telefono,
+                password
+            }),
+        });
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message);
+        }
+    }
     return (
         <>
             <link
@@ -21,7 +66,8 @@ const LoginSignUp = () => {
                         <div className={classes.front}>
                             <Image src={img1} alt="Front cover"/>
                             <div className={classes.text}>
-                                <span className={`${classes.text1}`}>Every new friend is a <br/> new adventure</span>
+                                    <span
+                                        className={`${classes.text1}`}>Every new friend is a <br/> new adventure</span>
                                 <span className={`${classes.text2}`}>Let's get connected</span>
                             </div>
                         </div>
@@ -43,15 +89,15 @@ const LoginSignUp = () => {
                                     <div className={classes.inputBoxes}>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-envelope"></i>
-                                            <input type="text" placeholder="Enter your email" required/>
+                                            <input type="text" placeholder="Email" required/>
                                         </div>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-lock"></i>
-                                            <input type="password" placeholder="Enter your password" required/>
+                                            <input type="password" placeholder="Password" required/>
                                         </div>
                                         <div className={classes.text}><a href="#">Forgot password?</a></div>
                                         <div className={`${classes.button} ${classes.inputBox}`}>
-                                            <input type="submit" value="Submit"/>
+                                            <input type="submit" value="Submit" onSubmit={Login}/>
                                         </div>
                                         <div className={`${classes.text} ${classes.signUpText}`}>
                                             Don't have an account?
@@ -68,18 +114,26 @@ const LoginSignUp = () => {
                                     <div className={classes.inputBoxes}>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-user"></i>
-                                            <input type="text" placeholder="Enter your name" required/>
+                                            <input type="text" placeholder="Nome" required/>
+                                        </div>
+                                        <div className={classes.inputBox}>
+                                            <i className="fas fa-user"></i>
+                                            <input type="text" placeholder="Cognome" required/>
                                         </div>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-envelope"></i>
-                                            <input type="text" placeholder="Enter your email" required/>
+                                            <input type="text" placeholder="Email" required/>
+                                        </div>
+                                        <div className={classes.inputBox}>
+                                            <i className="fas fa-phone"></i>
+                                            <input type="text" placeholder="Numero di telefono" required/>
                                         </div>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-lock"></i>
-                                            <input type="password" placeholder="Enter your password" required/>
+                                            <input type="password" placeholder="Password" required/>
                                         </div>
                                         <div className={`${classes.button} ${classes.inputBox}`}>
-                                            <input type="submit" value="Submit"/>
+                                            <input type="submit" value="Submit" onSubmit={SignUp}/>
                                         </div>
                                         <div className={`${classes.text} ${classes.signUpText}`}>
                                             Already have an account?
