@@ -1,11 +1,11 @@
 "use client";
-
 import classes from './page.module.css';
 import {useState, useEffect} from "react";
-import Image from "next/image";
-import torta1 from "../../img/torta1.png";
+import Link from "next/link";
 
-const Torte = ({desserts}) => {
+const Torte = () => {
+    const accessoEffettuato = localStorage.getItem('accessoEffettuato');
+    const ruolo = localStorage.getItem('ruolo');
     const [showPhoneNumber, setShowPhoneNumber] = useState(false);
 
     const togglePhoneNumber = () => {
@@ -24,7 +24,7 @@ const Torte = ({desserts}) => {
         }));
     }
 
-// fetch dei prodotti
+    // fetch dei prodotti
 
     const [prodotti, setProdotti] = useState(null);
     const [ingredienti, setIngredienti] = useState(null);
@@ -33,12 +33,13 @@ const Torte = ({desserts}) => {
 
     const fetchProdotti = async () => {
         try {
-            const response = await fetch('https://api.example.com/data'); // Replace with your API endpoint
+            const response = await fetch('http://localhost:8080/products'); // Replace with your API endpoint
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const result = await response.json();
             setProdotti(result);
+            console.log(prodotti);
         } catch (err) {
             setError(err.message);
         }
@@ -46,12 +47,13 @@ const Torte = ({desserts}) => {
 
     const fetchIngredienti = async (id) => {
         try {
-            const response = await fetch("https://localhost:8080/ingredienti");
+            const response = await fetch("https://localhost:8080/ingredients");
             if (!response) {
                 throw new Error("qualcosa è andato storto")
             }
             const result = await response.json();
             setIngredienti(result);
+            console.log(ingredienti);
         } catch (err) {
             setError(err.message);
         }
@@ -59,7 +61,7 @@ const Torte = ({desserts}) => {
 
     useEffect({
         fetchProdotti, fetchIngredienti
-    })
+    });
 
     return (
         <div className={classes.container}>
@@ -107,7 +109,7 @@ const Torte = ({desserts}) => {
                                     <span
                                         className={`${classes.arrow} ${toggledIngredients[dessert.id] ? classes.rotated : ''}`}
                                     >
-                                &#9660; {/* Freccia verso il basso */}
+                                &#9660;  Freccia verso il basso
                             </span>
                                 </button>
                                 {toggledIngredients[dessert.id] && (
@@ -121,10 +123,17 @@ const Torte = ({desserts}) => {
                             <Image className={classes.img} src={dessert.image} alt={dessert.name}/>
                         </div>
                     ))}
+
+                    {accessoEffettuato && ruolo === 'admin' && (
+                        <div className={classes.addCardConteiner}>
+                            <p className={classes.cardTitle}>Aggiungi una nuova torta &nbsp;</p>
+                            <Link href={"/prodotti/aggiungiProdotto"} className={classes.più}>+</Link>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
-    )
+    );
 
 }
 export default Torte;

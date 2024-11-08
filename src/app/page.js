@@ -1,11 +1,21 @@
+"use client";
 import styles from "./page.module.css";
 import Image from "next/image";
 import giacomo from "../img/Giacomo-1920w.jpg";
 import marmellata from "../img/marmellate.jpg.webp";
 import sezione2_immagine2 from "../img/sezione2_immagine2.png";
 import sezione2_immagine3 from "../img/sezione2_immagine3.png";
+import {useState} from "react";
+import classes from "@/app/prodotti/page.module.css";
 
 export default function Home() {
+
+    const [showPhoneNumber, setShowPhoneNumber] = useState(false);
+
+    const togglePhoneNumber = () => {
+        setShowPhoneNumber(!showPhoneNumber);
+    };
+
     return (
         <main className={styles.main}>
             <div className={styles.page}>
@@ -38,7 +48,11 @@ export default function Home() {
                         possibile ammirare una grande vetrata da cui poter apprezzare i nostri deliziosi prodotti. Una
                         location elegante e raffinata. Una volta entrati vi perderete in meravigliosi profumi e colori
                         capaci di sorprendere ed incuriosire.</p>
-                    <button>Chiamaci</button>
+                    <div>
+                        <button className={classes.callButton} onClick={togglePhoneNumber}>
+                            {showPhoneNumber ? 'Tel: +39 123 456 7890' : 'Chiamaci'}
+                        </button>
+                    </div>
                 </div>
                 <div className={styles.imageContainer}>
                     <Image src={giacomo} alt="Giacomo Aceti" className={styles.immagine}/>
@@ -69,7 +83,8 @@ export default function Home() {
                     <Image src={sezione2_immagine2} alt={"Vetrina pasticceria"} className={styles.sezione2_immagine2}/>
                 </div>
                 <div className={styles.terzaSezione}>
-                    <Image src={sezione2_immagine3} alt={"Sezione di una torta alle pesche"}  className={styles.sezione2_immagine3}/>
+                    <Image src={sezione2_immagine3} alt={"Sezione di una torta alle pesche"}
+                           className={styles.sezione2_immagine3}/>
                     <div className={styles.sedi}>
                         <h1>Le nostre sedi</h1>
                         <p>

@@ -17,8 +17,11 @@
 
 .login {
     display: flex;
-    padding: 1rem 1.5rem;
     color: black;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    max-width: 300px;
 }
 
 .login:hover {
@@ -143,4 +146,9 @@
 
 .open:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -5px);
+}
+
+
+.avatar {
+    max-width: 25%;
 }

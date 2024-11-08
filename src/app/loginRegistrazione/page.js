@@ -1,57 +1,76 @@
-"use client"; // Assicurati di avere questa direttiva se stai usando il rendering lato client
+"use client";
 
+import {useRef} from 'react';
 import classes from './page.module.css';
-import Image from "next/image"; // Importa il tuo file CSS
+import Image from "next/image";
 import img1 from '../../img/img1.jpg';
 import img2 from '../../img/img2.jpg';
 
-
 const LoginSignUp = () => {
-    const Login = async () => {
-        const email = e.addEventListener.email.value || '';
-        const password = e.addEventListener.password.value || '';
-        const response = await fetch('http://localhost:8080/auth/login', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email,
-                password
-            }),
-        });
-        if (!response.ok) {
-            const message = await response.text();
-            throw new Error(message);
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+    const nomeRef = useRef(null);
+    const cognomeRef = useRef(null);
+    const telefonoRef = useRef(null);
+    const signUpPasswordRef = useRef(null);
+
+    const Login = async (event) => {
+        event.preventDefault();
+        const email = emailRef.current.value || '';
+        const password = passwordRef.current.value || '';
+
+        try {
+            const response = await fetch('http://localhost:8080/auth/login', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({email, password}),
+            });
+
+            if (!response.ok) {
+                const message = await response.text();
+                throw new Error(message);
+            }
+
+            const data = await response.json();
+            localStorage.setItem('accessoEffetuato', true);
+            localStorage.setItem('ruolo', data.ruolo);
+            window.location.href = "/";
+        } catch (error) {
+            console.error('Login failed:', error);
         }
     };
 
-    const SignUp = async () => {
-        const nome = e.addEventListener.nome.value || '';
-        const cognome = e.addEventListener.cognome.value || '';
-        const email = e.addEventListener.email.value || '';
-        const telefono = e.addEventListener.telefono.value || '';
-        const password = e.addEventListener.password.value || '';
-        const response = await fetch('http://localhost:8080/auth/register', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                nome,
-                cognome,
-                email,
-                telefono,
-                password
-            }),
-        });
-        if (!response.ok) {
-            const message = await response.text();
-            throw new Error(message);
+    const SignUp = async (event) => {
+        event.preventDefault();
+        const nome = nomeRef.current.value || '';
+        const cognome = cognomeRef.current.value || '';
+        const email = emailRef.current.value || '';
+        const telefono = telefonoRef.current.value || '';
+        const password = signUpPasswordRef.current.value || '';
+
+        try {
+            const response = await fetch('http://localhost:8080/auth/register', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({nome, cognome, email, telefono, password}),
+            });
+
+            if (!response.ok) {
+                const message = await response.text();
+                throw new Error(message);
+            }
+            console.log("Signup successful!");
+        } catch (error) {
+            console.error('Signup failed:', error);
         }
-    }
+    };
+
     return (
         <>
             <link
@@ -59,15 +78,13 @@ const LoginSignUp = () => {
                 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
             />
             <div className={classes.body}>
-
                 <div className={classes.container}>
                     <input type="checkbox" className={classes.flip} id="flip"/>
                     <div className={classes.cover}>
                         <div className={classes.front}>
                             <Image src={img1} alt="Front cover"/>
                             <div className={classes.text}>
-                                    <span
-                                        className={`${classes.text1}`}>Every new friend is a <br/> new adventure</span>
+                                <span className={`${classes.text1}`}>Every new friend is a <br/> new adventure</span>
                                 <span className={`${classes.text2}`}>Let's get connected</span>
                             </div>
                         </div>
@@ -85,19 +102,19 @@ const LoginSignUp = () => {
                             {/* Login Form */}
                             <div className={classes.loginForm}>
                                 <div className={classes.title}>Login</div>
-                                <form action="#">
+                                <form onSubmit={Login}>
                                     <div className={classes.inputBoxes}>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-envelope"></i>
-                                            <input type="text" placeholder="Email" required/>
+                                            <input type="text" id="email" ref={emailRef} placeholder="Email" required/>
                                         </div>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-lock"></i>
-                                            <input type="password" placeholder="Password" required/>
+                                            <input type="password" ref={passwordRef} placeholder="Password" required/>
                                         </div>
                                         <div className={classes.text}><a href="#">Forgot password?</a></div>
                                         <div className={`${classes.button} ${classes.inputBox}`}>
-                                            <input type="submit" value="Submit" onSubmit={Login}/>
+                                            <input type="submit" value="Submit"/>
                                         </div>
                                         <div className={`${classes.text} ${classes.signUpText}`}>
                                             Don't have an account?
@@ -110,30 +127,32 @@ const LoginSignUp = () => {
                             {/* Signup Form */}
                             <div className={classes.signupForm}>
                                 <div className={classes.title}>Signup</div>
-                                <form action="#">
+                                <form onSubmit={SignUp}>
                                     <div className={classes.inputBoxes}>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-user"></i>
-                                            <input type="text" placeholder="Nome" required/>
+                                            <input type="text" ref={nomeRef} placeholder="Nome" required/>
                                         </div>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-user"></i>
-                                            <input type="text" placeholder="Cognome" required/>
+                                            <input type="text" ref={cognomeRef} placeholder="Cognome" required/>
                                         </div>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-envelope"></i>
-                                            <input type="text" placeholder="Email" required/>
+                                            <input type="text" ref={emailRef} placeholder="Email" required/>
                                         </div>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-phone"></i>
-                                            <input type="text" placeholder="Numero di telefono" required/>
+                                            <input type="text" ref={telefonoRef} placeholder="Numero di telefono"
+                                                   required/>
                                         </div>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-lock"></i>
-                                            <input type="password" placeholder="Password" required/>
+                                            <input type="password" ref={signUpPasswordRef} placeholder="Password"
+                                                   required/>
                                         </div>
                                         <div className={`${classes.button} ${classes.inputBox}`}>
-                                            <input type="submit" value="Submit" onSubmit={SignUp}/>
+                                            <input type="submit" value="Submit"/>
                                         </div>
                                         <div className={`${classes.text} ${classes.signUpText}`}>
                                             Already have an account?

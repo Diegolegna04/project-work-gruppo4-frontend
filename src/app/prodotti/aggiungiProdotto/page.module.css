@@ -1,0 +1,65 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Add some padding */
+    background-color: #f9f9f9; /* Light background color */
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    max-width: 600px; /* Limit max width for better layout */
+    background-color: #ffffff; /* White background for form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px; /* Padding inside the form */
+}
+
+/* Input styles */
+.form input[type="text"],
+.form input[type="number"],
+.form select {
+    width: 100%; /* Full width */
+    padding: 12px; /* Padding for input fields */
+    margin-bottom: 15px; /* Space between inputs */
+    border: 1px solid #f3bc9f; /* Light border using the base color */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+/* Focus effect for inputs */
+.form input[type="text"]:focus,
+.form input[type="number"]:focus,
+.form select:focus {
+    border-color: #e2a78d; /* Slightly darker shade on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Checkbox label styles */
+.form label {
+    margin-bottom: 15px; /* Space below label */
+}
+
+/* Button styles */
+.form button {
+    padding: 12px 20px; /* Padding for button */
+    background-color: #f3bc9f; /* Primary color for button */
+    color: white; /* Text color */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size for button text */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* Button hover effect */
+.form button:hover {
+    background-color: #e2a78d; /* Darker shade on hover */
+}

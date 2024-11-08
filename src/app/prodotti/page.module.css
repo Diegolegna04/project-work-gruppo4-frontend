@@ -24,7 +24,7 @@
 .callButton {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #d89ede; /* Colore del pulsante */
+    background-color: #f3bc9f; /* Colore del pulsante */
     color: white;
     border: none;
     border-radius: 5px;
@@ -32,7 +32,7 @@
 }
 
 .callButton:hover {
-    background-color: #85588a; /* Colore del pulsante al passaggio del mouse */
+    background-color: #dda282; /* Colore del pulsante al passaggio del mouse */
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -43,7 +43,7 @@
 .ingredientsButton {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #d89ede;
+    background-color: #f3bc9f;
     color: white;
     border: none;
     border-radius: 5px;
@@ -52,7 +52,7 @@
 }
 
 .ingredientsButton:hover {
-    background-color: #85588a;
+    background-color: #dda282;
 
 }
 
@@ -73,7 +73,7 @@
 /* --------------------------------------------------------------------------------------------- */
 
 
-/* contenitore delle varie torte*/
+/* contenitore delle varie prodotti*/
 
 .containerR {
     display: flex;
@@ -114,3 +114,37 @@
 }
 
 /* --------------------------------------------------------------------------------------------- */
+
+.addCardConteiner {
+    background-color: #f0f0f0; /* Light gray background */
+    border: 1px solid #ccc; /* Optional: Add a light border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding inside the container */
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: row; /* Horizontal layout */
+    justify-content: space-between; /* Space between title and link */
+    align-items: center; /* Center items vertically */
+    margin: 20px; /* Margin for spacing around the container */
+}
+
+.cardTitle {
+    color: #333; /* Darker text color for better readability */
+    margin: 0; /* Remove default margin */
+}
+
+.più {
+    font-size: 1.5rem; /* Larger font size for the plus sign */
+    color: #fff; /* White text color */
+    background-color: #f3bc9f; /* Bootstrap primary blue color or any custom color */
+    border-radius: 50%; /* Make it circular */
+    width: 2rem; /* Set width for the button */
+    height: 2rem; /* Set height for the button */
+    display: flex; /* Use flexbox to center the plus sign */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    text-decoration: none; /* Remove underline from link */
+}
+
+.più:hover {
+    background-color: #dda282; /* Darker blue on hover */
+}
