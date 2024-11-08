@@ -7,18 +7,20 @@ import img1 from '../../img/img1.jpg';
 import img2 from '../../img/img2.jpg';
 
 const LoginSignUp = () => {
-    const emailRe = useRef(null);
-    const emailRef = useRef(null);
+    const emailRe = useRef('');
+    const emailRef = useRef('');
     const passwordRef = useRef(null);
     const nomeRef = useRef(null);
     const cognomeRef = useRef(null);
-    const telefonoRef = useRef(null);
+    const telefonoRe = useRef('');
+    const telefonoRef = useRef('');
     const signUpPasswordRef = useRef(null);
 
     const Login = async (event) => {
         event.preventDefault();
         const email = emailRef.current.value || '';
         const password = passwordRef.current.value || '';
+        const telefono = telefonoRef.current.value || '';
         console.log(email);
         try {
             const response = await fetch('http://localhost:8080/auth/login', {
@@ -27,7 +29,7 @@ const LoginSignUp = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({email, password}),
+                body: JSON.stringify({email, telefono, password}),
             });
 
             if (!response.ok) {
@@ -49,9 +51,9 @@ const LoginSignUp = () => {
         const nome = nomeRef.current.value || '';
         const cognome = cognomeRef.current.value || '';
         const email = emailRe.current.value || '';
-        const telefono = telefonoRef.current.value || '';
+        const telefono = telefonoRe.current.value || '';
         const password = signUpPasswordRef.current.value || '';
-        console.log(nome,cognome,email, password, nome, cognome, telefono);
+        console.log(nome, cognome, email, password, nome, cognome, telefono);
 
         try {
             const response = await fetch('http://localhost:8080/auth/register', {
@@ -60,7 +62,7 @@ const LoginSignUp = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({nome, cognome, email, telefono, password}),
+                body: JSON.stringify({nome, cognome, email, password, telefono}),
             });
 
             if (!response.ok) {
@@ -145,7 +147,7 @@ const LoginSignUp = () => {
                                         </div>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-phone"></i>
-                                            <input type="text" ref={telefonoRef} placeholder="Numero di telefono"
+                                            <input type="text" ref={telefonoRe} placeholder="Numero di telefono"
                                                    required/>
                                         </div>
                                         <div className={classes.inputBox}>
