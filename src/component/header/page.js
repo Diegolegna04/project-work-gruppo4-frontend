@@ -41,7 +41,7 @@ export default function Header() {
                 <Link href={"/contatti"} className={classes.h1}>Contatti</Link>
             </div>
       {accessoEffettuato ? (
-    <Link href={'/'}>
+    <Link href={'/dashboardUtente'}>
         <div className={classes.login}>
             <Avatar className={classes.avatar} />
         </div>
