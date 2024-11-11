@@ -32,15 +32,14 @@ const LoginSignUp = () => {
                 body: JSON.stringify({email, telefono, password}),
             });
 
-            if (!response.ok) {
-                const message = await response.text();
-                throw new Error(message);
-            }
+            console.log(response);
 
-            const data = await response.json();
-            localStorage.setItem('accessoEffetuato', true);
-            localStorage.setItem('ruolo', data.ruolo);
-            window.location.href = "/";
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('check', true);
+                localStorage.setItem('ruolo', data.ruolo);
+                window.location.href = "/";
+            }
         } catch (error) {
             console.error('Login failed:', error);
         }
@@ -53,12 +52,11 @@ const LoginSignUp = () => {
         const email = emailRe.current.value || '';
         const telefono = telefonoRe.current.value || '';
         const password = signUpPasswordRef.current.value || '';
-        console.log(nome, cognome, email, password, nome, cognome, telefono);
+        console.log(nome, cognome, email, password, telefono);
 
         try {
             const response = await fetch('http://localhost:8080/auth/register', {
                 method: 'POST',
-                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -148,7 +146,7 @@ const LoginSignUp = () => {
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-phone"></i>
                                             <input type="text" ref={telefonoRe} placeholder="Numero di telefono"
-                                                   required/>
+                                            />
                                         </div>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-lock"></i>

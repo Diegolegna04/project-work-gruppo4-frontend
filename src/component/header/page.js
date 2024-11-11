@@ -6,12 +6,32 @@ import {useState} from "react";
 import {Avatar} from "@nextui-org/react";
 
 export default function Header() {
-    const accessoEffettuato = localStorage.getItem('accessoEffettuato');
+    const accessoEffettuato = localStorage.getItem('check');
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
+
+    const logOut = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/auth/logout', {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (response.ok) {
+                localStorage.removeItem('check');
+                localStorage.removeItem('ruolo');
+                window.location.href = "/";
+            }
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    }
 
     return (
         <div className={classes.header}>
@@ -44,6 +64,7 @@ export default function Header() {
                     <Link href={"/contatti"} className={classes.mobileLink}>Contatti</Link>
                 </nav>
             )}
+            <button onClick={logOut}>LogoutProva</button>
         </div>
     );
 }

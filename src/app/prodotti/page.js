@@ -4,7 +4,7 @@ import {useState, useEffect} from "react";
 import Link from "next/link";
 
 const Torte = () => {
-    const accessoEffettuato = localStorage.getItem('accessoEffettuato');
+    const accessoEffettuato = localStorage.getItem('check');
     const ruolo = localStorage.getItem('ruolo');
     const [showPhoneNumber, setShowPhoneNumber] = useState(false);
 
