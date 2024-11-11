@@ -69,12 +69,6 @@
     object-position: 50% 5%;
 }
 
-
-
-
-
-
-
 .container2 {
     width: 90%;
     display: flex;
@@ -176,4 +170,147 @@
 .sedi button:hover {
     font-weight: 500;
     transform: scale(1.05);
+}
+
+.macaron {
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: large;
+    font-weight: 100;
+    line-height: 1.4rem;
+}
+
+.macaron h3 {
+    font-weight: lighter;
+    font-size: 2rem;
+    padding: 2rem;
+}
+
+.macaron p{
+    text-align: center;
+    max-width: 43rem;
+    height: 7.5rem;
+}
+
+.container3 {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.blocco1,
+.blocco2 {
+    flex: 1;
+}
+
+.blocco1 {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.blocco2 {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+}
+
+.img {
+    width: 80%;
+    height: auto;
+}
+
+.testo1 {
+    max-width: 80%;
+    text-align: center;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+}
+
+.testo1 p {
+    line-height: 1.5rem;
+}
+
+.testo1 h3 {
+    font-weight: lighter;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}
+
+.testo2 {
+    max-width: 80%;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.testo2 p {
+    line-height: 1.5rem;
+}
+
+.testo2 h3 {
+    font-weight: lighter;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .container3 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .blocco1,
+    .blocco2 {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .testo2 {
+        text-align: center;
+    }
+}
+
+.container4 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    background-image: url("../img/marmellate.jpg.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.cta {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem;
+    padding: 2rem;
+    width: 31rem;
+    height: 17.5rem;
+    background-color: white;
+    opacity: 0.7;
+}
+
+.cta h2 {
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+.cta p {
+    text-align: center;
+    max-width: 22rem;
+    padding-bottom: 1rem;
 }

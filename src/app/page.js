@@ -7,6 +7,9 @@ import sezione2_immagine2 from "../img/sezione2_immagine2.png";
 import sezione2_immagine3 from "../img/sezione2_immagine3.png";
 import {useState} from "react";
 import classes from "@/app/prodotti/page.module.css";
+import marmellataHomemade from "../img/marmellate.webp";
+import biscotti from "../img/Incontri-biscotti-1920w.webp";
+import torte from "../img/Cerimonie-1920w.webp"
 
 export default function Home() {
 
@@ -94,6 +97,111 @@ export default function Home() {
                             Boutique: Via Carlo Croce, 4 - Varese
                         </p>
                         <button>Scopri di più</button>
+                    </div>
+                </div>
+            </div>
+            <div className={styles.macaron}>
+                <h3>Macarons</h3>
+                <p>
+                    Macarons = un’esplosione di sapore racchiusa tra due gusci morbidi e un cremoso ripieno.
+                    Dolcetti piccoli, rotondi e coloratissimi. Semplicemente deliziosi! Impossibile non innamorarsi
+                    a prima vista di questi dolci unici nel loro genere che ti travolgeranno con il loro sapore. Da
+                    C’est la Vie abbiamo sempre disponibili una grande varietà di gusti differenti tra cui
+                    scegliere. Sono inoltre l’ideale per un regalo elegante e raffinato.
+                </p>
+            </div>
+            <div className={styles.container3}>
+                <div className={styles.blocco1}>
+                    <Image src={marmellataHomemade} alt={"Marmellate homemade"} className={styles.img}/>
+                    <div className={styles.testo1}>
+                        <h3>Confetture e Marmellate</h3>
+                        <p>Nella nostra bellissima Boutique troverete ad aspettarvi anche le buonissime marmellate e
+                            confetture homemade.</p>
+                        <p>
+                            Dai gusti audaci, le nostre marmellate sono uniche e irresistibili, ma soprattutto buone!
+                        </p>
+                        <p>
+                            Prodotte esclusivamente in modo artigianale e con ingredienti di prima scelta sono ideali
+                            per una sana colazione o per una deliziosa merenda.
+                        </p>
+                        <p>
+                            Le trovate di vari gusti: arancia rossa e castagna, albicocca e camomilla, fragola e fava
+                            tonka, pesca e lavanda, pompelmo e pepe rosa e tanti altri! Le varianti sono molte e
+                            cambiano anche in base alla stagionalità!
+                        </p>
+                        <p>
+                            Queste deliziose confetture sono anche perfette come cadeau o come bomboniera per il vostro
+                            evento!
+                        </p>
+                    </div>
+                </div>
+                <div className={styles.blocco2}>
+                    <Image src={biscotti} alt={"Biscotti artigianali"} className={styles.img}/>
+                    <div className={styles.testo2}>
+                        <h3>Biscotti</h3>
+                        <p>Nella nostra bellissima Boutique troverete ad aspettarvi anche le buonissime marmellate e
+                            confetture homemade.</p>
+                        <p>
+                            Dai gusti audaci, le nostre marmellate sono uniche e irresistibili, ma soprattutto buone!
+                        </p>
+                        <p>
+                            Prodotte esclusivamente in modo artigianale e con ingredienti di prima scelta sono ideali
+                            per una sana colazione o per una deliziosa merenda.
+                        </p>
+                        <p>
+                            Le trovate di vari gusti: arancia rossa e castagna, albicocca e camomilla, fragola e fava
+                            tonka, pesca e lavanda, pompelmo e pepe rosa e tanti altri! Le varianti sono molte e
+                            cambiano anche in base alla stagionalità!
+                        </p>
+                        <p>
+                            Queste deliziose confetture sono anche perfette come cadeau o come bomboniera per il vostro
+                            evento!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div className={styles.container3}>
+                <div className={styles.blocco1}>
+                    <Image src={torte} alt={"Marmellate homemade"} className={styles.img}/>
+                    <div className={styles.testo1}>
+                        <h3>Torte per eventi</h3>
+                        <p>Le nozze sono uno dei giorni più importanti della vita e le torte nuziali rappresentano un
+                            vero e proprio simbolo di questo evento. Potrete scegliere la nostra pasticceria per la
+                            realizzazione della vostra torta, un pasticciere vi seguirà dal momento degli assaggi fino
+                            al grande giorno.
+                        </p>
+                        <p>
+                            Le nostre torte nuziali sono completamente personalizzabili ed è possibile scegliere tra la
+                            torta a piani o più torte singole. Entrambe di grande effetto. Collaboriamo con le realtà di
+                            catering più rinomate della zona, così da ricreare la decorazione perfetta per il vostro
+                            grande giorno.
+                        </p>
+                    </div>
+                </div>
+                <div className={styles.blocco2}>
+                    <Image src={biscotti} alt={"Biscotti artigianali"} className={styles.img}/>
+                    <div className={styles.testo2}>
+                        <h3>Tavolette di ciocciolato</h3>
+                        <p>Vieni a provare le nostre tavolette di cioccolato gourmet, un prodotto unico e creato con
+                            passione e amore. Le tavolette di Cioccolato Gourmet sono caratterizzate da contrasti di
+                            sapori innovativi e sorprendenti che seguono le evoluzioni del gusto. Un esempio? la nostra
+                            tavoletta gold: cioccolato fondente Chimelb con golosa farcitura alla nocciola pralinata,
+                            profumata con limone e zenzero.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div className={styles.container4}>
+                <div className={styles.cta}>
+                    <h2>Cerchi una pasticceria artigianale a Varese?</h2>
+                    <p>
+                        Contattaci per prenotare uno dei nostri deliziosi prodotti o per avere maggiori informazioni!
+                    </p>
+                    <div>
+                        <button className={classes.callButton} onClick={togglePhoneNumber}>
+                            {showPhoneNumber ? 'Tel: +39 123 456 7890' : 'Chiamaci'}
+                        </button>
                     </div>
                 </div>
             </div>
