@@ -63,3 +63,31 @@
 .form button:hover {
     background-color: #e2a78d; /* Darker shade on hover */
 }
+
+.fileInputLabel {
+    padding: 10px 20px;
+    background-color: #f3bc9f;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.fileInput {
+    display: none; /* Nasconde l'input file standard */
+}
+
+.imagePreview {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.previewImage {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

@@ -2,104 +2,83 @@
 import classes from './page.module.css';
 import {useState, useEffect} from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const Torte = () => {
     const accessoEffettuato = localStorage.getItem('check');
     const ruolo = localStorage.getItem('ruolo');
     const [showPhoneNumber, setShowPhoneNumber] = useState(false);
+    const [prodotti, setProdotti] = useState([]);
+    const [ingredienti, setIngredienti] = useState([]);
+    const [error, setError] = useState(false);
+    const [toggledIngredients, setToggledIngredients] = useState({});
 
     const togglePhoneNumber = () => {
         setShowPhoneNumber(!showPhoneNumber);
     };
 
-
-    // State to hold the toggled ingredient states
-    const [toggledIngredients, setToggledIngredients] = useState({});
-
-    // Function to toggle ingredients based on ID
     const toggleIngredients = (id) => {
         setToggledIngredients(prevState => ({
             ...prevState,
-            [id]: !prevState[id] // Toggle the specific ingredient's state
+            [id]: !prevState[id]
         }));
-    }
-
-    // fetch dei prodotti
-
-    const [prodotti, setProdotti] = useState(null);
-    const [ingredienti, setIngredienti] = useState(null);
-    const [error, setError] = useState(false);
-
+    };
 
     const fetchProdotti = async () => {
         try {
-            const response = await fetch('http://localhost:8080/products'); // Replace with your API endpoint
+            const response = await fetch('http://localhost:8080/products', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const result = await response.json();
             setProdotti(result);
-            console.log(prodotti);
         } catch (err) {
             setError(err.message);
         }
     };
 
-    const fetchIngredienti = async (id) => {
+    const fetchIngredienti = async () => {
         try {
-            const response = await fetch("https://localhost:8080/ingredients");
-            if (!response) {
-                throw new Error("qualcosa è andato storto")
+            const response = await fetch("http://localhost:8080/ingredients");
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
             }
             const result = await response.json();
             setIngredienti(result);
-            console.log(ingredienti);
+            console.log(result);
         } catch (err) {
             setError(err.message);
         }
     };
 
-    useEffect({
-        fetchProdotti, fetchIngredienti
-    });
+    useEffect(() => {
+        fetchProdotti();
+    }, []);
 
     return (
         <div className={classes.container}>
             <div className={classes.header}>
                 <h1>Torte moderne e classiche a Varese</h1>
-                <br/>
-                <br/>
-                <p>La nostra pasticceria offre una vasta scelta di torte classiche e moderne: dalla Saint Honoré
-                    alla
-                    Millefoglie, fino alle torte più moderne con mousse, cremosi e gelatine.<br/>
+                <p>La nostra pasticceria offre una vasta scelta di torte...</p>
+                <button className={classes.callButton} onClick={togglePhoneNumber}>
+                    {showPhoneNumber ? 'Tel: +39 123 456 7890' : 'Chiamaci'}
+                </button>
 
-                    Le proposte seguono la stagionalità delle materie prime ma anche la curiosità e la continua
-                    ricerca
-                    di Giacomo Aceti.
-                    Non riuscite a scegliere? Nessun problema! Potete trovare tutte le proposte anche in versione
-                    monoporzione, per concedervi una degustazione che sarà un viaggio tra i sapori. Passate nella
-                    nostra
-                    boutique in Via Carlo Croce, 4 per gustare anche le proposte rustiche, come la Lemon Tarte, la
-                    Paris-Brest e il Bosco Segreto!
-                </p>
-                <br/>
-                <br/>
-                <p>LE TORTE MODERNE SONO SOGGETTE A DISPONIBILITÀ E STAGIONALITÀ DEI PRODOTTI.
-
-                    Contattaci per concordare il tuo ordine, siamo sicuri di avere il prodotto giusto per te!
-                </p>
-                <br/>
-                <div>
-                    <button className={classes.callButton} onClick={togglePhoneNumber}>
-                        {showPhoneNumber ? 'Tel: +39 123 456 7890' : 'Chiamaci'}
-                    </button>
-                </div>
-                <div className={classes.containerR}>
-                    {prodotti.map((dessert) => (
-                        <div key={dessert.id} className={classes.containerText}>
-                            <h2>{dessert.name}</h2>
-                            <p>{dessert.description}</p>
-                            <div>
+                <div className={classes.containerP}>
+                    {prodotti.length > 0 ? (
+                        prodotti.map((dessert) => (
+                            <div key={dessert.id} className={classes.containerText}>
+                                <p>{dessert.category}</p>
+                                <h2>{dessert.name}</h2>
+                                <p>{dessert.description}</p>
+                                <p>{dessert.price}</p>
+                                <p>{dessert.quantity}</p>
                                 <button
                                     id={dessert.id.toString()}
                                     className={classes.ingredientsButton}
@@ -109,20 +88,24 @@ const Torte = () => {
                                     <span
                                         className={`${classes.arrow} ${toggledIngredients[dessert.id] ? classes.rotated : ''}`}
                                     >
-                                &#9660;  Freccia verso il basso
-                            </span>
+                                        &#9660;
+                                    </span>
                                 </button>
                                 {toggledIngredients[dessert.id] && (
                                     <ul className={classes.ingredientsList}>
-                                        {ingredienti.map((ingrediente, index) => (
-                                            <li key={index}>{ingrediente.name}</li>
-                                        ))}
+                                        {ingredienti
+                                            .filter((ingrediente) => ingrediente.productId === dessert.id)
+                                            .map((ingrediente) => (
+                                                <li key={ingrediente.id}>{ingrediente.name}</li>
+                                            ))}
                                     </ul>
                                 )}
+                                {/*<Image className={classes.img} src={dessert.image} alt={dessert.name}/>*/}
                             </div>
-                            <Image className={classes.img} src={dessert.image} alt={dessert.name}/>
-                        </div>
-                    ))}
+                        ))
+                    ) : (
+                        <p className={classes.noProducts}>Nessun prodotto disponibile al momento</p>
+                    )}
 
                     {accessoEffettuato && ruolo === 'admin' && (
                         <div className={classes.addCardConteiner}>
@@ -134,6 +117,6 @@ const Torte = () => {
             </div>
         </div>
     );
+};
 
-}
 export default Torte;

@@ -75,25 +75,12 @@
 
 /* contenitore delle varie prodotti*/
 
-.containerR {
+.containerP {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 80%;
-    margin: 20px;
-    border: solid 2px #f3bc9f;;
-}
-
-
-.containerL {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: center;
-    align-items: center;
-    width: 80%;
-    margin: 20px;
-    border: solid 2px #f3bc9f;;
 }
 
 .containerText {
@@ -102,16 +89,23 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    width: 50%;
     padding: 20px;
-    margin: 20px;
+    border: solid 2px #f3bc9f;
+    margin: 5px;
 }
 
 .img {
     width: 50%;
     height: auto;
 }
+
+.noProducts {
+    color: #777;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 20px 0;
+}
+
 
 /* --------------------------------------------------------------------------------------------- */
 

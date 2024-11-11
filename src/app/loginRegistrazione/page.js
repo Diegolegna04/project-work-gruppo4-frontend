@@ -37,13 +37,30 @@ const LoginSignUp = () => {
             if (response.ok) {
                 const data = await response.json();
                 localStorage.setItem('check', true);
-                localStorage.setItem('ruolo', data.ruolo);
+                Ruolo();
                 window.location.href = "/";
             }
         } catch (error) {
             console.error('Login failed:', error);
         }
     };
+
+    const Ruolo = async () => {
+        const respone = await fetch('http://localhost:8080/auth/account', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (respone.ok) {
+            const data = await respone.json();
+            localStorage.setItem('ruolo', data.ruolo);
+        } else {
+            console.log("Errore");
+        }
+    }
 
     const SignUp = async (event) => {
         event.preventDefault();
