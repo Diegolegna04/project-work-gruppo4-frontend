@@ -46,19 +46,26 @@ const LoginSignUp = () => {
     };
 
     const Ruolo = async () => {
-        const respone = await fetch('http://localhost:8080/auth/account', {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        try {
 
-        if (respone.ok) {
-            const data = await respone.json();
-            localStorage.setItem('ruolo', data.ruolo);
-        } else {
-            console.log("Errore");
+
+            const respone = await fetch('http://localhost:8080/auth/role', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                        'Content-Type': 'application/text-plain'
+                     }
+            });
+
+            if (respone.ok) {
+                const data = await respone.text();
+                localStorage.setItem('ruolo', data);
+                console.log(data);
+            } else {
+                console.log("Errore");
+            }
+        } catch (error) {
+            console.error('Ruolo failed:', error);
         }
     }
 

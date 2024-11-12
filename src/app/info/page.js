@@ -1,6 +1,6 @@
 "use client";
 import classes from "./page.module.css";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
 export default function utenteInfoPage() {
     const [infoUtente, setInfoUtente] = useState({});
@@ -40,6 +40,7 @@ export default function utenteInfoPage() {
             if (response.ok) {
                 const data = await response.json();
                 setInfoUtente(data);
+                console.log(data);
             }
         } catch (error) {
             console.error('Account failed:', error);
@@ -48,15 +49,16 @@ export default function utenteInfoPage() {
 
     const aggiornaDato = async (campo) => {
         try {
+
             const response = await fetch('http://localhost:8080/auth/update', {
-                method: 'PATCH',
+                method: 'PUT',
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ [campo]: nuovoDato }),
+                body: JSON.stringify({[campo]: nuovoDato}),
             });
-
+            console.log(nuovoDato);
             if (response.ok) {
                 alert("Dato aggiornato con successo!");
                 setModificaCampo(null);
@@ -68,6 +70,7 @@ export default function utenteInfoPage() {
         } catch (error) {
             console.error('Update failed:', error);
         }
+
     };
 
     useEffect(() => {
@@ -99,10 +102,24 @@ export default function utenteInfoPage() {
                             ) : (
                                 <button onClick={() => setModificaCampo(campo)}>Aggiungi {campo}</button>
                             )
-                        ) : null}
+                        ) : modificaCampo === campo ? (
+                            <div className={classes.editField}>
+                                <input
+                                    type="text"
+                                    placeholder={`Modifica ${campo}`}
+                                    value={nuovoDato}
+                                    onChange={(e) => setNuovoDato(e.target.value)}
+                                />
+                                <button onClick={() => aggiornaDato(campo)}>Salva</button>
+                                <button onClick={() => setModificaCampo(null)}>Annulla</button>
+                            </div>
+                        ) : (
+                            <button onClick={() => setModificaCampo(campo)}>Modifica {campo}</button>
+                        )}
                     </div>
                 ))}
             </div>
+
             <button className={classes.btnLogout} onClick={logOut}>
                 Logout
             </button>
