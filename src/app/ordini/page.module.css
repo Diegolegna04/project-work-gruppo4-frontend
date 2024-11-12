@@ -3,8 +3,19 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    margin: 3rem;
 }
 
 .tableH {
+    display: flex;
+}
+
+.tableColumn {
     padding: 10px;
+    text-align: left;
+}
+
+.tableCell {
+    padding: 10px;
+    text-align: center;
 }
