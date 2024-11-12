@@ -1,7 +1,8 @@
 export default function contatti() {
     return (
-        <div>
+        <>
+            <title>Contatti</title>
             Pagina contatti
-        </div>
+        </>
     )
 }

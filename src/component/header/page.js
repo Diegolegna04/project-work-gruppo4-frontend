@@ -13,26 +13,6 @@ export default function Header() {
         setIsOpen(!isOpen);
     };
 
-    const logOut = async () => {
-        try {
-            const response = await fetch('http://localhost:8080/auth/logout', {
-                method: 'DELETE',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-
-            if (response.ok) {
-                localStorage.removeItem('check');
-                localStorage.removeItem('ruolo');
-                window.location.href = "/";
-            }
-        } catch (error) {
-            console.error('Logout failed:', error);
-        }
-    }
-
     return (
         <div className={classes.header}>
             <div className={classes.container}>
@@ -40,17 +20,17 @@ export default function Header() {
                 <Link href={"/prodotti"} className={classes.h1}>Prodotti</Link>
                 <Link href={"/contatti"} className={classes.h1}>Contatti</Link>
             </div>
-      {accessoEffettuato ? (
-    <Link href={'/dashboardUtente'}>
-        <div className={classes.login}>
-            <Avatar className={classes.avatar} />
-        </div>
-    </Link>
-) : (
-    <div className={classes.login}>
-        <Link href={'/loginRegistrazione'}>Login / Registrati</Link>
-    </div>
-)}
+            {accessoEffettuato ? (
+                <Link href={'/dashboardUtente'}>
+                    <div className={classes.login}>
+                        <Avatar className={classes.avatar}/>
+                    </div>
+                </Link>
+            ) : (
+                <div className={classes.login}>
+                    <Link href={'/loginRegistrazione'}>Login / Registrati</Link>
+                </div>
+            )}
 
             <div className={classes.hamburger} onClick={toggleMenu}>
                 <div className={`${classes.line} ${isOpen ? classes.open : ''}`}></div>
@@ -64,7 +44,6 @@ export default function Header() {
                     <Link href={"/contatti"} className={classes.mobileLink}>Contatti</Link>
                 </nav>
             )}
-            <button onClick={logOut}>LogoutProva</button>
         </div>
     );
 }

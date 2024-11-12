@@ -1,0 +1,15 @@
+.btnLogout {
+    background-color: #f3bc9f;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+}
+
+.btnLogout:hover {
+    background-color: #dda282;
+}
+
+.infoUtente {
+    display: flex;
+    max-width: 100%;
+}

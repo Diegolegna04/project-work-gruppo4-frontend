@@ -12,7 +12,7 @@ export default function dashboardUtentePage() {
             <div className={classes.container}>
                 <Link href={"/info"} className={classes.utente}>
                     <Image className={classes.avatar} src={avatar} alt={"avatar utente"}/>
-                    <h2>Ciao Utente</h2>
+                    <h2>Informazioni Utente</h2>
                 </Link>
                 <Link href={"/ordini"} className={classes.ordini}>
                     <Image className={classes.img} src={ordini} width={200} alt={"Pagine storico ordini"}/>

@@ -115,6 +115,11 @@
     .mobileLink {
         display: none; /* Hide mobile menu links */
     }
+
+    .login {
+        display: flex;
+        align-items: flex-end;
+    }
 }
 
 /* Animation for mobile menu opening */
