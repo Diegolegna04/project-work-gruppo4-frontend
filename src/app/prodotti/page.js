@@ -107,7 +107,7 @@ const Torte = () => {
                         <p className={classes.noProducts}>Nessun prodotto disponibile al momento</p>
                     )}
 
-                    {accessoEffettuato && ruolo === 'admin' && (
+                    {accessoEffettuato && ruolo === 'Admin' && (
                         <div className={classes.addCardConteiner}>
                             <p className={classes.cardTitle}>Aggiungi una nuova torta &nbsp;</p>
                             <Link href={"/prodotti/aggiungiProdotto"} className={classes.più}>+</Link>
