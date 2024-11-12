@@ -38,6 +38,7 @@ const Torte = () => {
             }
             const result = await response.json();
             setProdotti(result);
+            console.log("CONSOLE LOG DEI DATI: ", result);
         } catch (err) {
             setError(err.message);
         }
@@ -56,6 +57,14 @@ const Torte = () => {
             setError(err.message);
         }
     };
+
+    function getImagePath(filePath) {
+        const parts = filePath.split('/');
+
+        // Ritorna i componenti dal terzultimo elemento in poi uniti nuovamente con "/"
+        return parts.slice(parts.length - 1);
+        // return '/' + parts.slice(parts.length - 3).join('/');
+    }
 
     useEffect(() => {
         fetchProdotti();
@@ -100,7 +109,13 @@ const Torte = () => {
                                             ))}
                                     </ul>
                                 )}
-                                {/*<Image className={classes.img} src={dessert.image} alt={dessert.name}/>*/}
+                                <Image
+                                    className={classes.img}
+                                    src={`/prodotti/${getImagePath(dessert.image)}`}
+                                    alt="Macaron Fragola"
+                                    width={200}
+                                    height={200}
+                                />
                             </div>
                         ))
                     ) : (

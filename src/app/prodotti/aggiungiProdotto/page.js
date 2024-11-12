@@ -48,9 +48,14 @@ const AggiungiProdotto = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setImmagine(URL.createObjectURL(file));
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImmagine(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
     };
+
 
     return (
         <div className={classes.container}>
