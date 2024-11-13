@@ -44,6 +44,57 @@ const Torte = () => {
         }
     };
 
+
+    const [quantitaSelezionata, setQuantitaSelezionata] = useState({});
+    const [carrello, setCarrello] = useState([]);
+    const [showCarrello, setShowCarrello] = useState(false);
+
+    // Incrementa la quantità selezionata
+    const incrementaQuantita = (id, maxQuantity) => {
+        setQuantitaSelezionata((prev) => ({
+            ...prev,
+            [id]: Math.min((prev[id] || 0) + 1, maxQuantity),
+        }));
+    };
+
+    // Decrementa la quantità selezionata
+    const decrementaQuantita = (id) => {
+        setQuantitaSelezionata((prev) => ({
+            ...prev,
+            [id]: Math.max((prev[id] || 0) - 1, 0),
+        }));
+    };
+
+    // Aggiungi al carrello
+    const aggiungiAlCarrello = (id) => {
+        const prodotto = prodotti.find((p) => p.id === id);
+        const quantita = quantitaSelezionata[id] || 0;
+
+        if (quantita > 0) {
+            setCarrello((prev) => {
+                const esiste = prev.find((item) => item.id === id);
+                if (esiste) {
+                    return prev.map((item) =>
+                        item.id === id
+                            ? {...item, quantita: item.quantita + quantita}
+                            : item
+                    );
+                }
+                return [...prev, {...prodotto, quantita}];
+            });
+
+            setQuantitaSelezionata((prev) => ({
+                ...prev,
+                [id]: 0,
+            }));
+        }
+    };
+
+    // Mostra o nascondi il carrello
+    const toggleCarrello = () => {
+        setShowCarrello((prev) => !prev);
+    };
+
     const fetchIngredienti = async () => {
         try {
             const response = await fetch("http://localhost:8080/ingredients");
@@ -56,6 +107,34 @@ const Torte = () => {
         } catch (err) {
             setError(err.message);
         }
+    };
+
+    const decrementaProdottoCarrello = (id) => {
+        setCarrello((prevCarrello) =>
+            prevCarrello
+                .map((item) =>
+                    item.id === id
+                        ? { ...item, quantita: item.quantita - 1 }
+                        : item
+                )
+                .filter((item) => item.quantita > 0) // Rimuove il prodotto se la quantità è 0
+        );
+    };
+
+    const incrementaProdottoCarrello = (id, maxQuantita) => {
+        setCarrello((prevCarrello) =>
+            prevCarrello.map((item) =>
+                item.id === id && item.quantita < maxQuantita
+                    ? { ...item, quantita: item.quantita + 1 }
+                    : item
+            )
+        );
+    };
+
+    const rimuoviProdottoCarrello = (id) => {
+        setCarrello((prevCarrello) =>
+            prevCarrello.filter((item) => item.id !== id) // Rimuove il prodotto con ID specifico
+        );
     };
 
     function getImagePath(filePath) {
@@ -80,52 +159,88 @@ const Torte = () => {
                 </button>
 
                 <div className={classes.containerP}>
+                    <button className={classes.carrelloIcon} onClick={toggleCarrello}>
+                        🛒 {carrello.reduce((acc, item) => acc + item.quantita, 0)}
+                    </button>
+
+                    {showCarrello && (
+                        <div className={classes.carrello}>
+                            <h3>Carrello</h3>
+                            {carrello.length > 0 ? (
+                                <ul>
+                                    {carrello.map((item) => (
+                                        <li key={item.id} className={classes.carrelloItem}>
+                        <span>
+                            {item.name} - €{item.price}
+                        </span>
+                                            <div className={classes.carrelloControls}>
+                                                <button
+                                                    onClick={() => decrementaProdottoCarrello(item.id)}
+                                                    disabled={item.quantita === 1}
+                                                >
+                                                    -
+                                                </button>
+                                                <span>{item.quantita}</span>
+                                                <button
+                                                    onClick={() => incrementaProdottoCarrello(item.id, item.maxQuantita)}
+                                                    disabled={item.quantita === item.maxQuantita}
+                                                >
+                                                    +
+                                                </button>
+                                                <button
+                                                    onClick={() => rimuoviProdottoCarrello(item.id)}
+                                                    className={classes.removeButton}
+                                                >
+                                                    🗑 Rimuovi
+                                                </button>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>Il carrello è vuoto.</p>
+                            )}
+                        </div>
+                    )}
+
                     {prodotti.length > 0 ? (
                         prodotti.map((dessert) => (
                             <div key={dessert.id} className={classes.containerText}>
                                 <p>{dessert.category}</p>
                                 <h2>{dessert.name}</h2>
                                 <p>{dessert.description}</p>
-                                <p>{dessert.price}</p>
-                                <p>{dessert.quantity}</p>
-                                <button
-                                    id={dessert.id.toString()}
-                                    className={classes.ingredientsButton}
-                                    onClick={() => toggleIngredients(dessert.id.toString())}
-                                >
-                                    Ingredienti
-                                    <span
-                                        className={`${classes.arrow} ${toggledIngredients[dessert.id] ? classes.rotated : ''}`}
+                                <p>Prezzo: €{dessert.price}</p>
+                                <p>Quantità disponibile: {dessert.quantity}</p>
+                                <div className={classes.quantityControls}>
+                                    <button
+                                        onClick={() => decrementaQuantita(dessert.id)}
+                                        disabled={quantitaSelezionata[dessert.id] === 0}
                                     >
-                                        &#9660;
-                                    </span>
+                                        -
+                                    </button>
+                                    <span>{quantitaSelezionata[dessert.id] || 0}</span>
+                                    <button
+                                        onClick={() => incrementaQuantita(dessert.id, dessert.quantity)}
+                                        disabled={quantitaSelezionata[dessert.id] === dessert.quantity}
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                                <button onClick={() => aggiungiAlCarrello(dessert.id)}>
+                                    Aggiungi al carrello
                                 </button>
-                                {toggledIngredients[dessert.id] && (
-                                    <ul className={classes.ingredientsList}>
-                                        {ingredienti
-                                            .filter((ingrediente) => ingrediente.productId === dessert.id)
-                                            .map((ingrediente) => (
-                                                <li key={ingrediente.id}>{ingrediente.name}</li>
-                                            ))}
-                                    </ul>
-                                )}
-                                <Image
-                                    className={classes.img}
-                                    src={`/prodotti/${getImagePath(dessert.image)}`}
-                                    alt="Macaron Fragola"
-                                    width={200}
-                                    height={200}
-                                />
                             </div>
                         ))
                     ) : (
                         <p className={classes.noProducts}>Nessun prodotto disponibile al momento</p>
                     )}
 
-                    {accessoEffettuato && ruolo === 'Admin' && (
+                    {accessoEffettuato && ruolo === "Admin" && (
                         <div className={classes.addCardConteiner}>
                             <p className={classes.cardTitle}>Aggiungi una nuova torta &nbsp;</p>
-                            <Link href={"/prodotti/aggiungiProdotto"} className={classes.più}>+</Link>
+                            <a href="/prodotti/aggiungiProdotto" className={classes.più}>
+                                +
+                            </a>
                         </div>
                     )}
                 </div>

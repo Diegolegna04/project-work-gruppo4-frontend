@@ -91,3 +91,66 @@
     object-fit: cover;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.ingredientSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.ingredientSection input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    flex: 1;
+}
+
+.addIngredientButton {
+    background-color: #f3bc9f;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-bottom:15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.addIngredientButton:hover {
+    background-color: #dda282;
+}
+
+.ingredientList {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.ingredientList li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 0;
+    margin:10px;
+    gap:5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.removeIngredientButton {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.removeIngredientButton:hover {
+    background-color: #cc0000 !important;
+}

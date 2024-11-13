@@ -142,3 +142,217 @@
 .più:hover {
     background-color: #dda282; /* Darker blue on hover */
 }
+
+/* Container principale */
+.containerP {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start; /* Allinea gli elementi in alto */
+    gap: 20px; /* Spazio tra i contenitori */
+    padding: 20px;
+}
+
+/* Testo e dettagli dei prodotti */
+.containerText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 2px solid #f3bc9f;
+    border-radius: 8px;
+    background-color: #fff; /* Sfondo bianco */
+    margin: 10px;
+    max-width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effetto ombra */
+    transition: transform 0.2s ease; /* Animazione al passaggio del mouse */
+}
+
+.containerText:hover {
+    transform: scale(1.02); /* Effetto zoom */
+}
+
+/* Pulsanti per modificare la quantità */
+.quantityControls {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Spazio tra pulsanti e quantità */
+    margin-top: 10px;
+}
+
+.quantityControls button {
+    background-color: #f3bc9f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quantityControls button:disabled {
+    background-color: #ddd; /* Colore disabilitato */
+    cursor: not-allowed;
+}
+
+.quantityControls button:hover:not(:disabled) {
+    background-color: #dda282; /* Colore al passaggio del mouse */
+}
+
+.quantityControls span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Pulsante Aggiungi al carrello */
+.containerText button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #f3bc9f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.containerText button:hover {
+    background-color: #dda282;
+}
+
+/* Icona del carrello */
+.carrelloIcon {
+    position: fixed;
+    top: 100px;
+    right: 10px;
+    background-color: #f3bc9f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombra */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.carrelloIcon:hover {
+    background-color: #dda282;
+    transform: scale(1.1); /* Effetto zoom */
+}
+
+/* Contenuto del carrello */
+.carrello {
+    position: fixed;
+    top: 170px;
+    right: 20px;
+    background-color: white;
+    border: 2px solid #f3bc9f;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto; /* Scroll per contenuto lungo */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10; /* Porta il carrello in primo piano */
+}
+
+.carrello h3 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.carrello ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.carrello ul li {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.carrello ul li:last-child {
+    margin-bottom: 0;
+}
+
+.carrello p {
+    color: #777;
+    font-size: 1rem;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Nessun prodotto */
+.noProducts {
+    color: #777;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.carrelloItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.carrelloControls {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Spazio tra pulsanti e quantità */
+}
+
+.carrelloControls button {
+    background-color: #f3bc9f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.carrelloControls button:disabled {
+    background-color: #ddd; /* Colore disabilitato */
+    cursor: not-allowed;
+}
+
+.carrelloControls button:hover:not(:disabled) {
+    background-color: #dda282;
+}
+
+.carrelloControls span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.removeButton {
+    background-color: #ff4d4d; /* Rosso per indicare la rimozione */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.removeButton:hover {
+    background-color: #cc0000 !important; /* Rosso più scuro al passaggio del mouse */
+}

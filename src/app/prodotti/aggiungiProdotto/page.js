@@ -56,10 +56,28 @@ const AggiungiProdotto = () => {
         }
     };
 
+    const [currentIngredient, setCurrentIngredient] = useState("");
+    const [ingredienti, setIngredienti] = useState([]);
+
+// Funzione per aggiungere un ingrediente alla lista
+    const aggiungiIngrediente = () => {
+        if (currentIngredient.trim() !== "") {
+            setIngredienti((prev) => [...prev, currentIngredient.trim()]);
+            setCurrentIngredient(""); // Resetta l'input
+        }
+    };
+
+// Funzione per rimuovere un ingrediente dalla lista
+    const rimuoviIngrediente = (index) => {
+        setIngredienti((prev) => prev.filter((_, i) => i !== index));
+    };
+
+
 
     return (
         <div className={classes.container}>
             <form className={classes.form} onSubmit={handleSubmit}>
+                {/* Campi esistenti */}
                 <input
                     type="text"
                     placeholder="Nome del prodotto"
@@ -88,8 +106,6 @@ const AggiungiProdotto = () => {
                     onChange={(e) => setQuantita(e.target.value)}
                     required
                 />
-
-                {/* Category Selection */}
                 <select
                     value={category}
                     onChange={(e) => setCategoria(e.target.value)}
@@ -101,8 +117,6 @@ const AggiungiProdotto = () => {
                     <option value="gelato">Gelato</option>
                     <option value="bevande">Bevande</option>
                 </select>
-
-                {/* Active Checkbox */}
                 <label>
                     <input
                         type="checkbox"
@@ -111,8 +125,6 @@ const AggiungiProdotto = () => {
                     />
                     attivare vendita online
                 </label>
-
-                {/* Input file con stile personalizzato */}
                 <label className={classes.fileInputLabel}>
                     Carica Immagine
                     <input
@@ -122,13 +134,47 @@ const AggiungiProdotto = () => {
                         className={classes.fileInput}
                     />
                 </label>
-
-                {/* Anteprima dell'immagine */}
                 {image && (
                     <div className={classes.imagePreview}>
                         <img src={image} alt="Anteprima" className={classes.previewImage}/>
                     </div>
                 )}
+
+                {/* Nuova sezione per gli ingredienti */}
+                <div className={classes.ingredientSection}>
+                    <input
+                        type="text"
+                        placeholder="Aggiungi ingrediente"
+                        value={currentIngredient}
+                        onChange={(e) => setCurrentIngredient(e.target.value)}
+                    />
+                    <button
+                        type="button"
+                        onClick={aggiungiIngrediente}
+                        className={classes.addIngredientButton}
+                    >
+                        +
+                    </button>
+                </div>
+
+                {/* Lista degli ingredienti */}
+                {ingredienti.length > 0 && (
+                    <ul className={classes.ingredientList}>
+                        {ingredienti.map((ingrediente, index) => (
+                            <li key={index}>
+                                {ingrediente}
+                                <button
+                                    type="button"
+                                    onClick={() => rimuoviIngrediente(index)}
+                                    className={classes.removeIngredientButton}
+                                >
+                                    🗑
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+
                 <button type="submit">Aggiungi Prodotto</button>
             </form>
         </div>
