@@ -96,7 +96,7 @@ export default function Home() {
                         <p>
                             Boutique: Via Carlo Croce, 4 - Varese
                         </p>
-                        <button>Scopri di più</button>
+                        <button className={classes.callButton}>Scopri di più</button>
                     </div>
                 </div>
             </div>
