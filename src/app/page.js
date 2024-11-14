@@ -51,11 +51,6 @@ export default function Home() {
                         possibile ammirare una grande vetrata da cui poter apprezzare i nostri deliziosi prodotti. Una
                         location elegante e raffinata. Una volta entrati vi perderete in meravigliosi profumi e colori
                         capaci di sorprendere ed incuriosire.</p>
-                    <div>
-                        <button className={classes.callButton} onClick={togglePhoneNumber}>
-                            {showPhoneNumber ? 'Tel: +39 123 456 7890' : 'Chiamaci'}
-                        </button>
-                    </div>
                 </div>
                 <div className={styles.imageContainer}>
                     <Image src={giacomo} alt="Giacomo Aceti" className={styles.immagine}/>
@@ -96,7 +91,11 @@ export default function Home() {
                         <p>
                             Boutique: Via Carlo Croce, 4 - Varese
                         </p>
-                        <button className={classes.callButton}>Scopri di più</button>
+                        <a href={"/contatti"}>
+                            <button className={classes.callButton}>
+                                Scopri di più
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>

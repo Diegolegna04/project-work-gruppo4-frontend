@@ -9,6 +9,7 @@ const Torte = () => {
     const ruolo = localStorage.getItem('ruolo');
     const [showPhoneNumber, setShowPhoneNumber] = useState(false);
     const [prodotti, setProdotti] = useState([]);
+    const [ingredienti, setIngredienti] = useState([]);
     const [error, setError] = useState(false);
     const [toggledIngredients, setToggledIngredients] = useState({});
 
@@ -216,12 +217,10 @@ const Torte = () => {
 
     return (
         <div className={classes.container}>
+            <title>Prodotti</title>
             <div className={classes.header}>
                 <h1>Torte moderne e classiche a Varese</h1>
                 <p>La nostra pasticceria offre una vasta scelta di torte...</p>
-                <button className={classes.callButton} onClick={togglePhoneNumber}>
-                    {showPhoneNumber ? 'Tel: +39 123 456 7890' : 'Chiamaci'}
-                </button>
 
                 <div className={classes.containerP}>
                     <button className={classes.carrelloIcon} onClick={toggleCarrello}>
