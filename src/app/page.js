@@ -9,6 +9,7 @@ import {useState} from "react";
 import classes from "@/app/prodotti/page.module.css";
 import marmellataHomemade from "../img/marmellate.webp";
 import biscotti from "../img/Incontri-biscotti-1920w.webp";
+import tavoletta from "../img/Tavoletta2-1920w.webp";
 import torte from "../img/Cerimonie-1920w.webp"
 
 export default function Home() {
@@ -128,10 +129,6 @@ export default function Home() {
                             tonka, pesca e lavanda, pompelmo e pepe rosa e tanti altri! Le varianti sono molte e
                             cambiano anche in base alla stagionalità!
                         </p>
-                        <p>
-                            Queste deliziose confetture sono anche perfette come cadeau o come bomboniera per il vostro
-                            evento!
-                        </p>
                     </div>
                 </div>
                 <div className={styles.blocco2}>
@@ -179,7 +176,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className={styles.blocco2}>
-                    <Image src={biscotti} alt={"Biscotti artigianali"} className={styles.img}/>
+                    <Image src={tavoletta} alt={"Biscotti artigianali"} className={styles.img}/>
                     <div className={styles.testo2}>
                         <h3>Tavolette di ciocciolato</h3>
                         <p>Vieni a provare le nostre tavolette di cioccolato gourmet, un prodotto unico e creato con

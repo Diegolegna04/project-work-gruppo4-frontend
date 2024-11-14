@@ -3,7 +3,8 @@ import classes from './page.module.css';
 import Link from "next/link";
 import React from "react";
 import {useState} from "react";
-import {Avatar} from "@nextui-org/react";
+import Image from 'next/image';
+import Avatar from "@/img/user.png";
 
 export default function Header() {
     const accessoEffettuato = localStorage.getItem('check');
@@ -23,7 +24,7 @@ export default function Header() {
             {accessoEffettuato ? (
                 <Link href={'/dashboardUtente'}>
                     <div className={classes.login}>
-                        <Avatar className={classes.avatar}/>
+                        <Image src={Avatar} alt="Avatar" className={classes.avatar} />
                     </div>
                 </Link>
             ) : (

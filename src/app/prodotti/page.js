@@ -67,7 +67,7 @@ const Torte = () => {
                 console.error("Errore nella risposta dal server:", response.statusText);
             }
         } catch (error) {
-            console.error("Errore nella fetch per caricare il carrello:", error);
+            console.log("Errore nella fetch per caricare il carrello:", error);
         }
     };
 
@@ -219,8 +219,7 @@ const Torte = () => {
         <div className={classes.container}>
             <title>Prodotti</title>
             <div className={classes.header}>
-                <h1>Torte moderne e classiche a Varese</h1>
-                <p>La nostra pasticceria offre una vasta scelta di torte...</p>
+                <h1>I nostri prodotti</h1>
 
                 <div className={classes.containerP}>
                     <button className={classes.carrelloIcon} onClick={toggleCarrello}>
@@ -267,13 +266,20 @@ const Torte = () => {
                         </div>
                     )}
 
-
+ {/*TODO: filtra per categoria*/}
                     {prodotti.length > 0 ? (
                         prodotti.map((dessert) => (
                             <div key={dessert.id} className={classes.containerText}>
-                                <p>{dessert.category}</p>
                                 <h2>{dessert.name}</h2>
-                                <p>{dessert.description}</p>
+
+                                <Image
+                                className={classes.img}
+                                src={`/prodotti/${getImagePath(dessert.image)}`}
+                                width={200}
+                                height={200}
+                                alt={""}
+                                />
+
                                 <p>Prezzo: €{dessert.price}</p>
                                 <p>Quantità disponibile: {dessert.quantity}</p>
                                 <div className={classes.quantityControls}>
@@ -292,12 +298,7 @@ const Torte = () => {
                                     </button>
                                 </div>
 
-                                <Image
-                                    className={classes.img}
-                                    src={`/prodotti/${getImagePath(dessert.image)}`}
-                                    width={200}
-                                    height={200}
-                                    alt={""}/>
+
 
                                 <button onClick={() => aggiungiAlCarrello(dessert.id)}>
                                     Aggiungi al carrello

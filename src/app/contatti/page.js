@@ -44,8 +44,7 @@ const Contatti = () => {
             <div className={classes.container}>
                 <div className={classes.mainContent}>
                     <h1 className={classes.titoloPrincipale}>C'EST LA VIE</h1>
-                    <p>Ti diamo il benvenuto in C'EST LA VIE. <br></br>
-                        Vieni a prova le nostre squisite torte</p>
+                    <p className={classes.faq}>FAQ</p>
                     <div>
                         {faqs.map((faq, index) => (
                             <div key={index} className={classes.faqItem}>

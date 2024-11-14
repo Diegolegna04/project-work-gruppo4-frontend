@@ -9,6 +9,10 @@
     color: white;
 }
 
+.main p{
+    font-family: Montserrat, sans-serif;
+}
+
 .sedi {
     display: flex;
     flex-direction: column;

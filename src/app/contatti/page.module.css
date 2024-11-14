@@ -36,9 +36,7 @@
 .sedeLegale {
     display: inline-block;
     padding: 15px 76px;
-    border: 2px solid #f3bc9f;
     color: #f3bc9f;
-    text-align: center;
     text-transform: uppercase;
     font-size: 20px;
     font-weight: 600;
@@ -47,9 +45,7 @@
 .sedeOperativa {
     display: inline-block;
     padding: 15px 56px;
-    border: 2px solid #f3bc9f;
     color: #f3bc9f;
-    text-align: center;
     text-transform: uppercase;
     font-size: 20px;
     font-weight: 600;
@@ -60,13 +56,16 @@
 }
 
 .paragrafiSedeLegale {
-    margin-bottom: 0;
-    margin-top: 25px;
+    padding: 5px;
 }
 
 .titoloPrincipale {
     color: #f3bc9f;
     font-weight: 600;
+}
+
+.faq {
+    font-size: 1.5rem;
 }
 
 /* Faq.module.css */

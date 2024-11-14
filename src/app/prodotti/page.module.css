@@ -8,6 +8,9 @@
     align-items: center;
     padding: 2rem;
 }
+.container p{
+    font-family: 'Montserrat', sans-serif;
+}
 
 .header {
     width: 80%;
@@ -19,9 +22,6 @@
     text-align: center;
 }
 
-.header h1, .header p {
-    margin: 10px;
-}
 
 /* bottone chiamaci */
 /* components/CallButton.module.css */
@@ -88,19 +88,29 @@
 }
 
 .containerText {
+    width: 400px;
+    height: 500px;
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
     border: solid 2px #f3bc9f;
-    margin: 5px;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+}
+.containerText h2{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+.containerText p{
+    padding-top: 3px;
 }
 
 .img {
-    width: 50%;
-    height: auto;
+    margin-top: 20px;
+    width: 250px;
+    height: 250px;
 }
 
 .noProducts {
@@ -158,31 +168,12 @@
     padding: 20px;
 }
 
-/* Testo e dettagli dei prodotti */
-.containerText {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border: 2px solid #f3bc9f;
-    border-radius: 8px;
-    background-color: #fff; /* Sfondo bianco */
-    margin: 10px;
-    max-width: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effetto ombra */
-    transition: transform 0.2s ease; /* Animazione al passaggio del mouse */
-}
-
-.containerText:hover {
-    transform: scale(1.02); /* Effetto zoom */
-}
-
 /* Pulsanti per modificare la quantità */
 .quantityControls {
     display: flex;
     align-items: center;
-    gap: 10px; /* Spazio tra pulsanti e quantità */
-    margin-top: 10px;
+    justify-content: center;
+    gap: 20px;
 }
 
 .quantityControls button {
@@ -207,8 +198,6 @@
 
 .quantityControls span {
     font-size: 16px;
-    font-weight: bold;
-    color: #333;
 }
 
 /* Pulsante Aggiungi al carrello */

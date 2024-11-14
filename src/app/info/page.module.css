@@ -56,6 +56,11 @@
 }
 
 /* Campi per modifica */
+
+.modifyButton {
+    width: 120px;
+}
+
 .editField {
     display: flex;
     align-items: center;

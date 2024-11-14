@@ -171,7 +171,7 @@ const LoginSignUp = () => {
                                         </div>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-envelope"></i>
-                                            <input type="text" ref={emailRe} placeholder="Email" required/>
+                                            <input type="text" ref={emailRe} placeholder="Email"/>
                                         </div>
                                         <div className={classes.inputBox}>
                                             <i className="fas fa-phone"></i>

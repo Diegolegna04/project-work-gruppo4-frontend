@@ -13,6 +13,7 @@
 
 .container {
     display: flex;
+    margin-left: 6rem;
 }
 
 .login {
@@ -154,5 +155,7 @@
 
 
 .avatar {
-    max-width: 4.69rem;
+    height: 2rem;
+    width: 2rem;
+    margin-right: 6rem;
 }

@@ -8,8 +8,12 @@
 }
 
 .h1 {
+    font-family: Montserrat, sans-serif;
     text-align: center;
     margin: 2rem;
+}
+.h1 h2 {
+    font-family: Montserrat, sans-serif;
 }
 
 .utente {
@@ -21,12 +25,14 @@
 }
 
 .img {
-    height: auto;
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 20px;
+    height: 5rem;
+    width: 5rem;
 }
 
 .avatar {
+    height: 6rem;
+    width: 6rem;
     margin: 1rem;
     padding: 1rem;
 }

@@ -101,7 +101,7 @@ export default function utenteInfoPage() {
                                     <button onClick={() => setModificaCampo(null)}>Annulla</button>
                                 </div>
                             ) : (
-                                <button onClick={() => setModificaCampo(campo)}>Aggiungi {campo}</button>
+                                <button className={classes.modifyButton} onClick={() => setModificaCampo(campo)}>Aggiungi</button>
                             )
                         ) : modificaCampo === campo ? (
                             <div className={classes.editField}>
@@ -115,7 +115,7 @@ export default function utenteInfoPage() {
                                 <button onClick={() => setModificaCampo(null)}>Annulla</button>
                             </div>
                         ) : (
-                            <button onClick={() => setModificaCampo(campo)}>Modifica {campo}</button>
+                            <button className={classes.modifyButton} onClick={() => setModificaCampo(campo)}>Modifica</button>
                         )}
                     </div>
                 ))}
