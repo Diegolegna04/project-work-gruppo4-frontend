@@ -151,12 +151,10 @@ const Torte = () => {
 
     return (
         <div className={classes.container}>
+            <title>Prodotti</title>
             <div className={classes.header}>
                 <h1>Torte moderne e classiche a Varese</h1>
                 <p>La nostra pasticceria offre una vasta scelta di torte...</p>
-                <button className={classes.callButton} onClick={togglePhoneNumber}>
-                    {showPhoneNumber ? 'Tel: +39 123 456 7890' : 'Chiamaci'}
-                </button>
 
                 <div className={classes.containerP}>
                     <button className={classes.carrelloIcon} onClick={toggleCarrello}>
@@ -170,9 +168,9 @@ const Torte = () => {
                                 <ul>
                                     {carrello.map((item) => (
                                         <li key={item.id} className={classes.carrelloItem}>
-                        <span>
-                            {item.name} - €{item.price}
-                        </span>
+                                            <span>
+                                                {item.name} - €{item.price}
+                                            </span>
                                             <div className={classes.carrelloControls}>
                                                 <button
                                                     onClick={() => decrementaProdottoCarrello(item.id)}

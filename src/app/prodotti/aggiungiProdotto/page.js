@@ -76,6 +76,7 @@ const AggiungiProdotto = () => {
 
     return (
         <div className={classes.container}>
+            <title>Prodotti | Aggiungi prodotti</title>
             <form className={classes.form} onSubmit={handleSubmit}>
                 {/* Campi esistenti */}
                 <input
@@ -123,7 +124,7 @@ const AggiungiProdotto = () => {
                         checked={showToUser}
                         onChange={(e) => setIsActive(e.target.checked)}
                     />
-                    attivare vendita online
+                    &nbsp;Attivare vendita online
                 </label>
                 <label className={classes.fileInputLabel}>
                     Carica Immagine

@@ -79,6 +79,7 @@ export default function utenteInfoPage() {
 
     return (
         <div className={classes.container}>
+            <title>Info Utente</title>
             <h1>Informazioni utente</h1>
             <div className={classes.info}>
                 {['nome', 'cognome', 'email', 'telefono'].map((campo) => (

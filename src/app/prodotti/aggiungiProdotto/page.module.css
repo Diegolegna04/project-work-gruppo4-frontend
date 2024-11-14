@@ -44,6 +44,9 @@
 
 /* Checkbox label styles */
 .form label {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     margin-bottom: 15px; /* Space below label */
 }
 

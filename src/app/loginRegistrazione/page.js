@@ -5,6 +5,7 @@ import classes from './page.module.css';
 import Image from "next/image";
 import img1 from '../../img/img1.jpg';
 import img2 from '../../img/img2.jpg';
+import swal from "sweetalert";
 
 const LoginSignUp = () => {
     const emailRe = useRef('');
@@ -53,8 +54,8 @@ const LoginSignUp = () => {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
-                        'Content-Type': 'application/text-plain'
-                     }
+                    'Content-Type': 'application/text-plain'
+                }
             });
 
             if (respone.ok) {
@@ -91,8 +92,13 @@ const LoginSignUp = () => {
                 const message = await response.text();
                 throw new Error(message);
             }
+            await swal("Account creato con successo, controlla la mail per verificare l'account!");
             console.log("Signup successful!");
         } catch (error) {
+            await swal({
+                text: "Creazione account fallita (Indirizzo email già registrato)",
+                icon: "error"
+            });
             console.error('Signup failed:', error);
         }
     };
