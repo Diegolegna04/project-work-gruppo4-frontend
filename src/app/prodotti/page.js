@@ -270,43 +270,44 @@ const Torte = () => {
                         </div>
                     )}
 
-                    {/*TODO: filtra per categoria*/}
                     {prodotti.length > 0 ? (
                         prodotti.map((dessert) => (
-                            <div key={dessert.id} className={classes.containerText}>
-                                <h2>{dessert.name}</h2>
+                            // Verifica se il prodotto deve essere mostrato all'utente
+                            dessert.showToUser && (
+                                <div key={dessert.id} className={classes.containerText}>
+                                    <h2>{dessert.name}</h2>
 
-                                <Image
-                                    className={classes.img}
-                                    src={`/prodotti/${getImagePath(dessert.image)}`}
-                                    width={200}
-                                    height={200}
-                                    alt={""}
-                                />
+                                    <Image
+                                        className={classes.img}
+                                        src={`/prodotti/${getImagePath(dessert.image)}`}
+                                        width={200}
+                                        height={200}
+                                        alt={""}
+                                    />
 
-                                <p>Prezzo: €{dessert.price}</p>
-                                <p>Quantità disponibile: {dessert.quantity}</p>
-                                <div className={classes.quantityControls}>
-                                    <button
-                                        onClick={() => decrementaQuantita(dessert.id)}
-                                        disabled={quantitaSelezionata[dessert.id] === 0}
-                                    >
-                                        -
-                                    </button>
-                                    <span>{quantitaSelezionata[dessert.id] || 0}</span>
-                                    <button
-                                        onClick={() => incrementaQuantita(dessert.id, dessert.quantity)}
-                                        disabled={quantitaSelezionata[dessert.id] === dessert.quantity}
-                                    >
-                                        +
+                                    <p>Prezzo: €{dessert.price}</p>
+                                    <p>Quantità disponibile: {dessert.quantity}</p>
+                                    <div className={classes.quantityControls}>
+                                        <button
+                                            onClick={() => decrementaQuantita(dessert.id)}
+                                            disabled={quantitaSelezionata[dessert.id] === 0}
+                                        >
+                                            -
+                                        </button>
+                                        <span>{quantitaSelezionata[dessert.id] || 0}</span>
+                                        <button
+                                            onClick={() => incrementaQuantita(dessert.id, dessert.quantity)}
+                                            disabled={quantitaSelezionata[dessert.id] === dessert.quantity}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+
+                                    <button onClick={() => aggiungiAlCarrello(dessert.id)}>
+                                        Aggiungi al carrello
                                     </button>
                                 </div>
-
-
-                                <button onClick={() => aggiungiAlCarrello(dessert.id)}>
-                                    Aggiungi al carrello
-                                </button>
-                            </div>
+                            )
                         ))
                     ) : (
                         <p className={classes.noProducts}>Nessun prodotto disponibile al momento</p>

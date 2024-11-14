@@ -124,7 +124,7 @@ export default function GestioneOrdiniPage() {
                                     </td>
                                     <td className={classes.td}>
                                         <Link href={`/gestioneOrdini/${item.id}`}>
-                                            <Button>Visualizza dettagli</Button>
+                                            <Button className={classes.changeOrderStatus}>Visualizza dettagli</Button>
                                         </Link>
                                     </td>
                                 </tr>
