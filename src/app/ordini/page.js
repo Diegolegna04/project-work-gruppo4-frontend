@@ -1,15 +1,17 @@
 "use client";
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import classes from "./page.module.css";
 
 export default function OrdiniPage() {
     const accessoEffettuato = localStorage.getItem("check");
     const [ordine, setOrdine] = useState([]);
     const [error, setError] = useState(null);
+    const router = useRouter();
 
     const fetchOrdine = async () => {
         try {
-            const response = await fetch("http://localhost:8080/order", {
+            const response = await fetch("http://localhost:8080/order/user", {
                 method: "GET",
                 credentials: "include",
                 headers: {
@@ -21,7 +23,6 @@ export default function OrdiniPage() {
             }
             const result = await response.json();
             setOrdine(result);
-            console.log("Fetched Orders:", result);
         } catch (err) {
             setError(err.message);
         }
@@ -49,6 +50,7 @@ export default function OrdiniPage() {
                             <div className={classes.tableCell}>Telefono</div>
                             <div className={classes.tableCell}>Prezzo</div>
                             <div className={classes.tableCell}>Stato ordine</div>
+                            <div className={classes.tableCell}>Azioni</div>
                         </div>
                         {ordine.map((item) => (
                             <div key={item.id} className={classes.tableRow}>
@@ -66,6 +68,14 @@ export default function OrdiniPage() {
                                 </div>
                                 <div className={classes.tableCell} data-label="Stato ordine">
                                     {item.status}
+                                </div>
+                                <div className={classes.tableCell} data-label="Azioni">
+                                    <button
+                                        className={classes.detailsButton}
+                                        onClick={() => router.push(`/ordini/${item.id}`)}
+                                    >
+                                        Mostra Dettagli
+                                    </button>
                                 </div>
                             </div>
                         ))}

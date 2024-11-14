@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import classes from "./page.module.css";
+import classes from "./OrderDetails.module.css"; // Assicurati di avere uno stile per questo componente
 
 export default function OrderDetails({ params }) {
     const { orderId } = params;
@@ -57,7 +57,7 @@ export default function OrderDetails({ params }) {
             <p><strong>Stato:</strong> {orderDetails.status}</p>
             <p><strong>Prezzo:</strong> €{orderDetails.price}</p>
             <p><strong>Data dell'ordine:</strong> {orderDetails.orderDate ? new Date(orderDetails.orderDate).toLocaleString() : "Non disponibile"}</p>
-            <p><strong>Data e ora di ritiro:</strong> {orderDetails.pickupDateTime ? new Date(orderDetails.pickupDateTime.pickupDateTime).toLocaleString() : "Non disponibile"}</p>
+            <p><strong>Data e ora di ritiro:</strong> {orderDetails.pickupDateTime ? new Date(orderDetails.pickupDateTime).toLocaleString() : "Non disponibile"}</p>
             <h3>Prodotti</h3>
             <ul>
                 {orderDetails.products && orderDetails.products.length > 0 ? (

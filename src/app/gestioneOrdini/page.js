@@ -11,11 +11,10 @@ import classes from "./page.module.css";
 import Link from "next/link";
 
 export default function GestioneOrdiniPage() {
-    const [selectedColor, setSelectedColor] = React.useState("default")
-
+    const [selectedColor, setSelectedColor] = useState("default");
     const variants = ["solid", "bordered", "light", "flat", "faded", "shadow"];
-    const accessoEffettuato = localStorage.getItem("check");
-    const ruolo = localStorage.getItem("ruolo");
+    const accessoEffettuato = typeof window !== "undefined" ? localStorage.getItem("check") : null;
+    const ruolo = typeof window !== "undefined" ? localStorage.getItem("ruolo") : null;
     const [ordini, setOrdini] = useState([]);
     const [error, setError] = useState(null);
 
@@ -71,7 +70,7 @@ export default function GestioneOrdiniPage() {
 
     return (
         <>
-            <title>Ordini</title>
+            <title>Gestione Ordini</title>
             <h2 className={classes.h2}>Ordini effettuati dagli utenti</h2>
             {ruolo === "Admin" ? (
                 <div className={classes.container}>
@@ -118,7 +117,7 @@ export default function GestioneOrdiniPage() {
                                         </Dropdown>
                                     </div>
                                     <div className={classes.tableCell} data-label="Dettagli ordine">
-                                        <Link href={`/ordini/${item.id}`}>
+                                        <Link href={`/gestioneOrdini/${item.id}`}>
                                             <Button>Visualizza dettagli</Button>
                                         </Link>
                                     </div>
