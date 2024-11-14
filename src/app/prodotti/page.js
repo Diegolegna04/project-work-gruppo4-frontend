@@ -1,7 +1,6 @@
 "use client";
 import classes from './page.module.css';
 import {useState, useEffect} from "react";
-import Link from "next/link";
 import Image from "next/image";
 import cartIcon from "@/img/muffin.png"
 
@@ -13,17 +12,6 @@ const Torte = () => {
     const [ingredienti, setIngredienti] = useState([]);
     const [error, setError] = useState(false);
     const [toggledIngredients, setToggledIngredients] = useState({});
-
-    const togglePhoneNumber = () => {
-        setShowPhoneNumber(!showPhoneNumber);
-    };
-
-    const toggleIngredients = (id) => {
-        setToggledIngredients(prevState => ({
-            ...prevState,
-            [id]: !prevState[id]
-        }));
-    };
 
     const fetchProdotti = async () => {
         try {
@@ -73,10 +61,7 @@ const Torte = () => {
     };
 
 
-    const CartToCart = async () => {
-
-        const idProduct = carrello.map((item) => item.id);
-        const quantity = carrello.map((item) => item.quantita);
+    const CartToCart = async (idProduct, quantity) => {
 
         try {
             const response = await fetch("http://localhost:8080/cart/add", {
@@ -120,41 +105,6 @@ const Torte = () => {
             [id]: Math.max((prev[id] || 0) - 1, 0),
         }));
     };
-
-    // Aggiungi al carrello
-    const aggiungiAlCarrello = async (idProdotto) => {
-        // Trova il prodotto che si sta aggiungendo
-        const prodotto = prodotti.find((item) => item.id === idProdotto);
-
-        if (!prodotto) {
-            console.error("Prodotto non trovato.");
-            return;
-        }
-
-        // Aggiorna lo stato locale del carrello
-        setCarrello((prevCarrello) => {
-            const esisteNelCarrello = prevCarrello.some((item) => item.id === idProdotto);
-
-            if (esisteNelCarrello) {
-                return prevCarrello.map((item) =>
-                    item.id === idProdotto
-                        ? {...item, quantita: item.quantita + 1}
-                        : item
-                );
-            } else {
-                return [...prevCarrello, {...prodotto, quantita: 1}];
-            }
-        });
-
-        // Chiamata alla fetch per aggiornare il carrello sul server
-        try {
-            await CartToCart(); // Invoca la funzione Cart per sincronizzare il carrello
-            console.log("Prodotto aggiunto al carrello lato server.");
-        } catch (error) {
-            console.error("Errore durante l'aggiornamento del carrello lato server:", error);
-        }
-    };
-
 
     const decrementaProdottoCarrello = (id) => {
         setCarrello((prevCarrello) =>
@@ -210,6 +160,10 @@ const Torte = () => {
         // return '/' + parts.slice(parts.length - 3).join('/');
     }
 
+    const cart = async () => {
+        window.location.href = "/cart";
+    }
+
     useEffect(() => {
         showCart();
         fetchProdotti();
@@ -263,6 +217,9 @@ const Torte = () => {
                                             </div>
                                         </li>
                                     ))}
+                                    <li>
+                                        <button onClick={cart}>Conferma il tuo ordine</button>
+                                    </li>
                                 </ul>
                             ) : (
                                 <p>Il carrello è vuoto.</p>
@@ -270,48 +227,54 @@ const Torte = () => {
                         </div>
                     )}
 
+                    {/*TODO: filtra per categoria*/}
                     {prodotti.length > 0 ? (
-                        prodotti.map((dessert) => (
-                            // Verifica se il prodotto deve essere mostrato all'utente
-                            dessert.showToUser && (
-                                <div key={dessert.id} className={classes.containerText}>
-                                    <h2>{dessert.name}</h2>
+                        prodotti.map((dessert) =>
+                                dessert.showToUser && (
+                                    <div key={dessert.id} className={classes.containerText}>
+                                        <h2>{dessert.name}</h2>
 
-                                    <Image
-                                        className={classes.img}
-                                        src={`/prodotti/${getImagePath(dessert.image)}`}
-                                        width={200}
-                                        height={200}
-                                        alt={""}
-                                    />
+                                        <Image
+                                            className={classes.img}
+                                            src={`/prodotti/${getImagePath(dessert.image)}`}
+                                            width={200}
+                                            height={200}
+                                            alt={dessert.name}
+                                        />
 
-                                    <p>Prezzo: €{dessert.price}</p>
-                                    <p>Quantità disponibile: {dessert.quantity}</p>
-                                    <div className={classes.quantityControls}>
+                                        <p>Prezzo: €{dessert.price}</p>
+                                        <p>Quantità disponibile: {dessert.quantity}</p>
+
+                                        <div className={classes.quantityControls}>
+                                            <button
+                                                onClick={() => decrementaQuantita(dessert.id)}
+                                                disabled={!quantitaSelezionata[dessert.id] || quantitaSelezionata[dessert.id] === 0}
+                                            >
+                                                -
+                                            </button>
+                                            <span>{quantitaSelezionata[dessert.id] || 0}</span>
+                                            <button
+                                                onClick={() => incrementaQuantita(dessert.id, dessert.quantity)}
+                                                disabled={quantitaSelezionata[dessert.id] === dessert.quantity}
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+
                                         <button
-                                            onClick={() => decrementaQuantita(dessert.id)}
-                                            disabled={quantitaSelezionata[dessert.id] === 0}
+                                            onClick={() => CartToCart(dessert.id, quantitaSelezionata[dessert.id] || 0)}
+                                            disabled={!quantitaSelezionata[dessert.id] || quantitaSelezionata[dessert.id] === 0}
                                         >
-                                            -
-                                        </button>
-                                        <span>{quantitaSelezionata[dessert.id] || 0}</span>
-                                        <button
-                                            onClick={() => incrementaQuantita(dessert.id, dessert.quantity)}
-                                            disabled={quantitaSelezionata[dessert.id] === dessert.quantity}
-                                        >
-                                            +
+                                            Aggiungi al carrello
                                         </button>
                                     </div>
-
-                                    <button onClick={() => aggiungiAlCarrello(dessert.id)}>
-                                        Aggiungi al carrello
-                                    </button>
-                                </div>
-                            )
-                        ))
+                                )
+                        )
                     ) : (
                         <p className={classes.noProducts}>Nessun prodotto disponibile al momento</p>
                     )}
+
+
 
                     {accessoEffettuato && ruolo === "Admin" && (
                         <div className={classes.addCardContainer}>
