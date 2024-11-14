@@ -1,22 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-    Dropdown,
-    DropdownTrigger,
-    DropdownMenu,
-    DropdownItem,
-    Button
-} from "@nextui-org/react";
+import {Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/react";
 import classes from "./page.module.css";
 import Link from "next/link";
 
 export default function GestioneOrdiniPage() {
     const [selectedColor, setSelectedColor] = useState("default");
-    const variants = ["solid", "bordered", "light", "flat", "faded", "shadow"];
     const accessoEffettuato = typeof window !== "undefined" ? localStorage.getItem("check") : null;
     const ruolo = typeof window !== "undefined" ? localStorage.getItem("ruolo") : null;
     const [ordini, setOrdini] = useState([]);
     const [error, setError] = useState(null);
+    const variants = ["solid", "bordered", "light", "flat", "faded", "shadow"];
 
     const fetchOrdini = async () => {
         try {
@@ -77,53 +71,53 @@ export default function GestioneOrdiniPage() {
                     {error ? (
                         <p className={classes.error}>Errore: {error}</p>
                     ) : ordini.length > 0 ? (
-                        <div className={classes.table}>
-                            <div className={`${classes.tableRow} ${classes.tableHeader}`}>
-                                <div className={classes.tableCell}>ID ordine</div>
-                                <div className={classes.tableCell}>Email</div>
-                                <div className={classes.tableCell}>Telefono</div>
-                                <div className={classes.tableCell}>Prezzo</div>
-                                <div className={classes.tableCell}>Stato ordine</div>
-                                <div className={classes.tableCell}>Dettagli ordine</div>
-                            </div>
+                        <table className={classes.table}>
+                            <thead>
+                            <tr className={classes.tr}>
+                                <th className={classes.th}>ID ordine</th>
+                                <th className={classes.th}>Email</th>
+                                <th className={classes.th}>Telefono</th>
+                                <th className={classes.thPrezzo}>Prezzo</th>
+                                <th className={classes.th}>Stato ordine</th>
+                                <th className={classes.th}>Dettagli ordine</th>
+                            </tr>
+                            </thead>
+                            <tbody>
                             {ordini.map((item) => (
-                                <div key={item.id} className={classes.tableRow}>
-                                    <div className={classes.tableCell} data-label="ID ordine">
-                                        {item.id}
-                                    </div>
-                                    <div className={classes.tableCell} data-label="Email">
-                                        {item.email}
-                                    </div>
-                                    <div className={classes.tableCell} data-label="Telefono">
-                                        {item.telephone || "Numero non inserito"}
-                                    </div>
-                                    <div className={classes.tableCell} data-label="Prezzo">
-                                        {item.price}
-                                    </div>
-                                    <div className={classes.tableCell} data-label="Stato ordine">
-                                        {item.status}&nbsp;
+                                <tr key={item.id}>
+                                    <td className={classes.td}>{item.id}</td>
+                                    <td className={classes.td}>{item.email}</td>
+                                    <td className={classes.td}>{item.telephone || "Numero non inserito"}</td>
+                                    <td className={classes.td}>{item.price}</td>
+                                    <td className={classes.td}>
+                                        {item.status}<br />
                                         <Dropdown>
                                             <DropdownTrigger>
-                                                <Button>Cambia stato ordine</Button>
+                                                <Button disabled={item.status === "Accepted" || item.status === "Rejected"}>
+                                                    Cambia stato ordine
+                                                </Button>
                                             </DropdownTrigger>
-                                            <DropdownMenu aria-label="Azioni sull'ordine">
-                                                <DropdownItem onClick={() => handleOrderStatus(item, "Accepted")}>
-                                                    Accetta ordine
-                                                </DropdownItem>
-                                                <DropdownItem onClick={() => handleOrderStatus(item, "Rejected")}>
-                                                    Rifiuta ordine
-                                                </DropdownItem>
-                                            </DropdownMenu>
+                                            {item.status !== "Accepted" && item.status !== "Rejected" && (
+                                                <DropdownMenu className={classes.btn} aria-label="Azioni sull'ordine">
+                                                    <DropdownItem onClick={() => handleOrderStatus(item, "Accepted")}>
+                                                        Accetta ordine
+                                                    </DropdownItem>
+                                                    <DropdownItem onClick={() => handleOrderStatus(item, "Rejected")}>
+                                                        Rifiuta ordine
+                                                    </DropdownItem>
+                                                </DropdownMenu>
+                                            )}
                                         </Dropdown>
-                                    </div>
-                                    <div className={classes.tableCell} data-label="Dettagli ordine">
+                                    </td>
+                                    <td className={classes.td}>
                                         <Link href={`/gestioneOrdini/${item.id}`}>
                                             <Button>Visualizza dettagli</Button>
                                         </Link>
-                                    </div>
-                                </div>
+                                    </td>
+                                </tr>
                             ))}
-                        </div>
+                            </tbody>
+                        </table>
                     ) : (
                         <h1 className={classes.emptyMessage}>Non è stato effettuato alcun ordine</h1>
                     )}
