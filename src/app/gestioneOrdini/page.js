@@ -1,17 +1,24 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/react";
+import Modal from "react-modal";
+import { Button } from "@nextui-org/react";
 import classes from "./page.module.css";
 import Link from "next/link";
 
 export default function GestioneOrdiniPage() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [newStatus, setNewStatus] = useState("");
     const [selectedColor, setSelectedColor] = useState("default");
-    const accessoEffettuato = typeof window !== "undefined" ? localStorage.getItem("check") : null;
-    const ruolo = typeof window !== "undefined" ? localStorage.getItem("ruolo") : null;
+    const accessoEffettuato =
+        typeof window !== "undefined" ? localStorage.getItem("check") : null;
+    const ruolo =
+        typeof window !== "undefined" ? localStorage.getItem("ruolo") : null;
     const [ordini, setOrdini] = useState([]);
     const [error, setError] = useState(null);
     const variants = ["solid", "bordered", "light", "flat", "faded", "shadow"];
 
+    // Funzione per recuperare gli ordini dal server
     const fetchOrdini = async () => {
         try {
             const response = await fetch("http://localhost:8080/order", {
@@ -31,11 +38,12 @@ export default function GestioneOrdiniPage() {
         }
     };
 
+    // Funzione per aggiornare lo stato dell'ordine
     const handleOrderStatus = async (ordine, newStatus) => {
         try {
             const acceptOrder = {
                 orderId: ordine.id,
-                accepted: newStatus === "Accepted"
+                accepted: newStatus === "Accepted",
             };
             const response = await fetch("http://localhost:8080/order", {
                 method: "PUT",
@@ -52,12 +60,27 @@ export default function GestioneOrdiniPage() {
                     item.id === ordine.id ? { ...item, status: newStatus } : item
                 )
             );
+            closeModal();
         } catch (err) {
             console.error("Errore durante l'aggiornamento dello stato dell'ordine:", err.message);
             setError(err.message);
         }
     };
 
+    // Funzione per aprire la modale
+    const openModal = (order) => {
+        setSelectedOrder(order);
+        setIsModalOpen(true);
+    };
+
+    // Funzione per chiudere la modale
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedOrder(null);
+        setNewStatus("");
+    };
+
+    // Effettua il fetch degli ordini se l'accesso è stato effettuato
     useEffect(() => {
         if (accessoEffettuato) fetchOrdini();
     }, [accessoEffettuato]);
@@ -86,28 +109,18 @@ export default function GestioneOrdiniPage() {
                             {ordini.map((item) => (
                                 <tr key={item.id}>
                                     <td className={classes.td}>{item.id}</td>
-                                    <td className={classes.td}>{item.email}</td>
+                                    <td className={classes.td}>{item.email || "Email non inserita"}</td>
                                     <td className={classes.td}>{item.telephone || "Numero non inserito"}</td>
                                     <td className={classes.td}>{item.price}</td>
                                     <td className={classes.td}>
-                                        {item.status}<br />
-                                        <Dropdown>
-                                            <DropdownTrigger>
-                                                <Button disabled={item.status === "Accepted" || item.status === "Rejected"}>
-                                                    Cambia stato ordine
-                                                </Button>
-                                            </DropdownTrigger>
-                                            {item.status !== "Accepted" && item.status !== "Rejected" && (
-                                                <DropdownMenu className={classes.btn} aria-label="Azioni sull'ordine">
-                                                    <DropdownItem onClick={() => handleOrderStatus(item, "Accepted")}>
-                                                        Accetta ordine
-                                                    </DropdownItem>
-                                                    <DropdownItem onClick={() => handleOrderStatus(item, "Rejected")}>
-                                                        Rifiuta ordine
-                                                    </DropdownItem>
-                                                </DropdownMenu>
-                                            )}
-                                        </Dropdown>
+                                        {item.status}
+                                        <button
+                                            className={classes.changeOrderStatus}
+                                            onClick={() => openModal(item)}
+                                            disabled={item.status === "Accepted" || item.status === "Rejected"}
+                                        >
+                                            Modifica
+                                        </button>
                                     </td>
                                     <td className={classes.td}>
                                         <Link href={`/gestioneOrdini/${item.id}`}>
@@ -124,6 +137,40 @@ export default function GestioneOrdiniPage() {
                 </div>
             ) : (
                 <p>Accesso Negato</p>
+            )}
+
+            {/* Modale */}
+            {isModalOpen && (
+                <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={closeModal}
+                    contentLabel="Modifica Stato Ordine"
+                    className={classes.modal}
+                    overlayClassName={classes.overlay}
+                    ariaHideApp={false}
+                >
+                    <h2>Modifica Stato Ordine</h2>
+                    <div>
+                        <button
+                            className={`${classes.optionButton} ${newStatus === "Accepted" ? classes.selected : ""}`}
+                            onClick={() => setNewStatus("Accepted")}
+                        >
+                            Accetta ordine
+                        </button>
+                        <button
+                            className={`${classes.optionButton} ${newStatus === "Rejected" ? classes.selected : ""}`}
+                            onClick={() => setNewStatus("Rejected")}
+                        >
+                            Rifiuta ordine
+                        </button>
+                    </div>
+                    <button onClick={() => handleOrderStatus(selectedOrder, newStatus)} className={classes.saveButton}>
+                        Salva
+                    </button>
+                    <button onClick={closeModal} className={classes.cancelButton}>
+                        Annulla
+                    </button>
+                </Modal>
             )}
         </>
     );

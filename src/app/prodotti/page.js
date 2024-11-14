@@ -3,6 +3,7 @@ import classes from './page.module.css';
 import {useState, useEffect} from "react";
 import Link from "next/link";
 import Image from "next/image";
+import cartIcon from "@/img/muffin.png"
 
 const Torte = () => {
     const accessoEffettuato = localStorage.getItem('check');
@@ -223,7 +224,10 @@ const Torte = () => {
 
                 <div className={classes.containerP}>
                     <button className={classes.carrelloIcon} onClick={toggleCarrello}>
-                        🛒 {carrello.reduce((acc, item) => acc + item.quantita, 0)}
+                        <Image src={cartIcon} alt={carrello} className={classes.muffinIcon}/>
+                        <span className={classes.cartQuantity}>
+                            {carrello.reduce((acc, item) => acc + item.quantita, 0)}
+                        </span>
                     </button>
 
                     {showCarrello && (
@@ -266,18 +270,18 @@ const Torte = () => {
                         </div>
                     )}
 
- {/*TODO: filtra per categoria*/}
+                    {/*TODO: filtra per categoria*/}
                     {prodotti.length > 0 ? (
                         prodotti.map((dessert) => (
                             <div key={dessert.id} className={classes.containerText}>
                                 <h2>{dessert.name}</h2>
 
                                 <Image
-                                className={classes.img}
-                                src={`/prodotti/${getImagePath(dessert.image)}`}
-                                width={200}
-                                height={200}
-                                alt={""}
+                                    className={classes.img}
+                                    src={`/prodotti/${getImagePath(dessert.image)}`}
+                                    width={200}
+                                    height={200}
+                                    alt={""}
                                 />
 
                                 <p>Prezzo: €{dessert.price}</p>
@@ -299,7 +303,6 @@ const Torte = () => {
                                 </div>
 
 
-
                                 <button onClick={() => aggiungiAlCarrello(dessert.id)}>
                                     Aggiungi al carrello
                                 </button>
@@ -310,7 +313,7 @@ const Torte = () => {
                     )}
 
                     {accessoEffettuato && ruolo === "Admin" && (
-                        <div className={classes.addCardConteiner}>
+                        <div className={classes.addCardContainer}>
                             <p className={classes.cardTitle}>Aggiungi una nuova torta &nbsp;</p>
                             <a href="/prodotti/aggiungiProdotto" className={classes.più}>
                                 +
