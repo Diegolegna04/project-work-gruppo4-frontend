@@ -10,6 +10,8 @@ const AggiungiProdotto = () => {
     const [category, setCategoria] = useState('');
     const [showToUser, setIsActive] = useState(false);
     const [image, setImmagine] = useState(null);
+    const [currentIngredient, setCurrentIngredient] = useState("");
+    const [ingredientList, setIngredienti] = useState([]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,12 +27,15 @@ const AggiungiProdotto = () => {
                 description,
                 price,
                 quantity,
+                ingredientList,
                 category,
-                showToUser,
-                image
+                image,
+                showToUser
             })
 
         })
+        console.log(ingredientList, name, description, price, quantity, category, image, showToUser);
+
         if (response.ok) {
             alert("Prodotto aggiunto con successo");
             setNome('');
@@ -56,8 +61,6 @@ const AggiungiProdotto = () => {
         }
     };
 
-    const [currentIngredient, setCurrentIngredient] = useState("");
-    const [ingredienti, setIngredienti] = useState([]);
 
 // Funzione per aggiungere un ingrediente alla lista
     const aggiungiIngrediente = () => {
@@ -71,7 +74,6 @@ const AggiungiProdotto = () => {
     const rimuoviIngrediente = (index) => {
         setIngredienti((prev) => prev.filter((_, i) => i !== index));
     };
-
 
 
     return (
@@ -158,9 +160,9 @@ const AggiungiProdotto = () => {
                 </div>
 
                 {/* Lista degli ingredienti */}
-                {ingredienti.length > 0 && (
+                {ingredientList.length > 0 && (
                     <ul className={classes.ingredientList}>
-                        {ingredienti.map((ingrediente, index) => (
+                        {ingredientList.map((ingrediente, index) => (
                             <li key={index}>
                                 {ingrediente}
                                 <button

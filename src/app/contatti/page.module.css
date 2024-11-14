@@ -1,0 +1,140 @@
+.mappa {
+    width: 100%;
+    height: auto;
+}
+
+/* styles/Layout.module.css */
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box; /* Considera padding e bordo nel calcolo delle dimensioni */
+    color: #616161;
+    font-family: "Montserrat", sans-serif;
+}
+
+.mainContent {
+    flex: 3; /* La parte principale occupa più spazio */
+    padding: 20px;
+    border-right: 1px solid #ddd; /* Aggiungi una linea di separazione tra la parte principale e la sidebar */
+    text-align: center;
+}
+
+/* New CSS for sidebarContainer to ensure vertical stacking */
+.sidebarContainer {
+    flex: 1; /* La sidebar occupa meno spazio rispetto al contenuto principale */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+
+.sedeLegale {
+    display: inline-block;
+    padding: 15px 76px;
+    border: 2px solid #f3bc9f;
+    color: #f3bc9f;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.sedeOperativa {
+    display: inline-block;
+    padding: 15px 56px;
+    border: 2px solid #f3bc9f;
+    color: #f3bc9f;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.strong {
+    color: #6d6d6d;
+}
+
+.paragrafiSedeLegale {
+    margin-bottom: 0;
+    margin-top: 25px;
+}
+
+.titoloPrincipale {
+    color: #f3bc9f;
+    font-weight: 600;
+}
+
+/* Faq.module.css */
+.faqItem {
+    margin: 15px 0;
+}
+
+.faqButton {
+    background-color: #f3bc9f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.faqButton:hover {
+    background-color: #dda282;
+}
+
+.arrow {
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.faqAnswer {
+    margin: 10px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-left: 4px solid #f3bc9f;
+    border-radius: 5px;
+}
+
+
+@media (max-width: 1160px) {
+    .container{
+        flex-direction: column;
+    }
+    .mainContent {
+        border: none;
+    }
+
+    .sidebarContainer{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(370px, 1fr));
+        gap: 50px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 30px;
+    }
+}
+
+@media (max-width: 780px) {
+    .sidebarContainer {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+}

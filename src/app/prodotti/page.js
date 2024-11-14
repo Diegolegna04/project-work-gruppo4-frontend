@@ -9,7 +9,6 @@ const Torte = () => {
     const ruolo = localStorage.getItem('ruolo');
     const [showPhoneNumber, setShowPhoneNumber] = useState(false);
     const [prodotti, setProdotti] = useState([]);
-    const [ingredienti, setIngredienti] = useState([]);
     const [error, setError] = useState(false);
     const [toggledIngredients, setToggledIngredients] = useState({});
 
@@ -49,6 +48,61 @@ const Torte = () => {
     const [carrello, setCarrello] = useState([]);
     const [showCarrello, setShowCarrello] = useState(false);
 
+    const showCart = async () => {
+        try {
+            const response = await fetch("http://localhost:8080/cart", {
+                method: "GET",
+                credentials: "include", // Necessario per includere il cookie di sessione
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json(); // Assumi che il server restituisca il carrello come JSON
+                setCarrello(data); // Aggiorna lo stato locale del carrello
+                console.log("Carrello caricato con successo.");
+            } else {
+                console.error("Errore nella risposta dal server:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Errore nella fetch per caricare il carrello:", error);
+        }
+    };
+
+
+    const CartToCart = async () => {
+
+        const idProduct = carrello.map((item) => item.id);
+        const quantity = carrello.map((item) => item.quantita);
+
+        try {
+            const response = await fetch("http://localhost:8080/cart/add", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(idProduct, quantity)
+            });
+
+            console.log("id " + idProduct, "quantity" + quantity);
+            if (response.ok) {
+                console.log("Carrello aggiornato con successo lato server.");
+            } else {
+                console.error("Errore nella risposta dal server:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Errore nella fetch per aggiornare il carrello:", error);
+        }
+    };
+
+    // Mostra o nasconde il carrello
+    const toggleCarrello = () => {
+        setShowCarrello((prev) => !prev);
+    };
+
+
     // Incrementa la quantità selezionata
     const incrementaQuantita = (id, maxQuantity) => {
         setQuantitaSelezionata((prev) => ({
@@ -66,55 +120,46 @@ const Torte = () => {
     };
 
     // Aggiungi al carrello
-    const aggiungiAlCarrello = (id) => {
-        const prodotto = prodotti.find((p) => p.id === id);
-        const quantita = quantitaSelezionata[id] || 0;
+    const aggiungiAlCarrello = async (idProdotto) => {
+        // Trova il prodotto che si sta aggiungendo
+        const prodotto = prodotti.find((item) => item.id === idProdotto);
 
-        if (quantita > 0) {
-            setCarrello((prev) => {
-                const esiste = prev.find((item) => item.id === id);
-                if (esiste) {
-                    return prev.map((item) =>
-                        item.id === id
-                            ? {...item, quantita: item.quantita + quantita}
-                            : item
-                    );
-                }
-                return [...prev, {...prodotto, quantita}];
-            });
-
-            setQuantitaSelezionata((prev) => ({
-                ...prev,
-                [id]: 0,
-            }));
+        if (!prodotto) {
+            console.error("Prodotto non trovato.");
+            return;
         }
-    };
 
-    // Mostra o nascondi il carrello
-    const toggleCarrello = () => {
-        setShowCarrello((prev) => !prev);
-    };
+        // Aggiorna lo stato locale del carrello
+        setCarrello((prevCarrello) => {
+            const esisteNelCarrello = prevCarrello.some((item) => item.id === idProdotto);
 
-    const fetchIngredienti = async () => {
-        try {
-            const response = await fetch("http://localhost:8080/ingredients");
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
+            if (esisteNelCarrello) {
+                return prevCarrello.map((item) =>
+                    item.id === idProdotto
+                        ? {...item, quantita: item.quantita + 1}
+                        : item
+                );
+            } else {
+                return [...prevCarrello, {...prodotto, quantita: 1}];
             }
-            const result = await response.json();
-            setIngredienti(result);
-            console.log(result);
-        } catch (err) {
-            setError(err.message);
+        });
+
+        // Chiamata alla fetch per aggiornare il carrello sul server
+        try {
+            await CartToCart(); // Invoca la funzione Cart per sincronizzare il carrello
+            console.log("Prodotto aggiunto al carrello lato server.");
+        } catch (error) {
+            console.error("Errore durante l'aggiornamento del carrello lato server:", error);
         }
     };
+
 
     const decrementaProdottoCarrello = (id) => {
         setCarrello((prevCarrello) =>
             prevCarrello
                 .map((item) =>
                     item.id === id
-                        ? { ...item, quantita: item.quantita - 1 }
+                        ? {...item, quantita: item.quantita - 1}
                         : item
                 )
                 .filter((item) => item.quantita > 0) // Rimuove il prodotto se la quantità è 0
@@ -125,17 +170,35 @@ const Torte = () => {
         setCarrello((prevCarrello) =>
             prevCarrello.map((item) =>
                 item.id === id && item.quantita < maxQuantita
-                    ? { ...item, quantita: item.quantita + 1 }
+                    ? {...item, quantita: item.quantita + 1}
                     : item
             )
         );
     };
 
-    const rimuoviProdottoCarrello = (id) => {
-        setCarrello((prevCarrello) =>
-            prevCarrello.filter((item) => item.id !== id) // Rimuove il prodotto con ID specifico
-        );
+    const rimuoviProdottoCarrello = async (idProdotto) => {
+        try {
+            const response = await fetch(`http://localhost:8080/cart/remove/${idProdotto}`, {
+                method: "DELETE",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.ok) {
+                setCarrello((prevCarrello) =>
+                    prevCarrello.filter((item) => item.id !== idProdotto)
+                );
+                console.log("Prodotto rimosso dal carrello.");
+            } else {
+                console.error("Errore nella risposta dal server:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Errore nella fetch per rimuovere il prodotto:", error);
+        }
     };
+
 
     function getImagePath(filePath) {
         const parts = filePath.split('/');
@@ -146,8 +209,10 @@ const Torte = () => {
     }
 
     useEffect(() => {
+        showCart();
         fetchProdotti();
     }, []);
+
 
     return (
         <div className={classes.container}>
@@ -170,9 +235,9 @@ const Torte = () => {
                                 <ul>
                                     {carrello.map((item) => (
                                         <li key={item.id} className={classes.carrelloItem}>
-                        <span>
-                            {item.name} - €{item.price}
-                        </span>
+                                             <span>
+                                                 {item.name} - €{item.price}
+                                             </span>
                                             <div className={classes.carrelloControls}>
                                                 <button
                                                     onClick={() => decrementaProdottoCarrello(item.id)}
@@ -203,6 +268,7 @@ const Torte = () => {
                         </div>
                     )}
 
+
                     {prodotti.length > 0 ? (
                         prodotti.map((dessert) => (
                             <div key={dessert.id} className={classes.containerText}>
@@ -226,6 +292,14 @@ const Torte = () => {
                                         +
                                     </button>
                                 </div>
+
+                                <Image
+                                    className={classes.img}
+                                    src={`/prodotti/${getImagePath(dessert.image)}`}
+                                    width={200}
+                                    height={200}
+                                    alt={""}/>
+
                                 <button onClick={() => aggiungiAlCarrello(dessert.id)}>
                                     Aggiungi al carrello
                                 </button>
