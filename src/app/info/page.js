@@ -1,6 +1,7 @@
 "use client";
 import classes from "./page.module.css";
 import {useEffect, useState} from "react";
+import swal from "sweetalert";
 
 export default function utenteInfoPage() {
     const [infoUtente, setInfoUtente] = useState({});
@@ -60,12 +61,12 @@ export default function utenteInfoPage() {
             });
             console.log(nuovoDato);
             if (response.ok) {
-                alert("Dato aggiornato con successo!");
+                await swal("Dato aggiornato con successo!");
                 setModificaCampo(null);
                 setNuovoDato('');
                 account(); // Aggiorna i dati dopo la modifica
             } else {
-                alert("Errore durante l'aggiornamento del dato.");
+                await swal("Errore durante l'aggiornamento del dato.");
             }
         } catch (error) {
             console.error('Update failed:', error);
