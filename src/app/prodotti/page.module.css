@@ -236,12 +236,17 @@
 }
 
 .muffinIcon{
+    margin-top: 2rem;
+    margin-right: 6.5rem;
     width: 30px;
     height: 30px;
 }
 
 .cartQuantity {
     position: absolute;
+
+    margin-top: 2rem;
+    margin-right: 6.5rem;
     top: -8px;
     right: -8px;
     background-color: #f3bc9f;

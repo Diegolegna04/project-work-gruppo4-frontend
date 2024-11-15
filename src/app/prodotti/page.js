@@ -227,7 +227,6 @@ const Torte = () => {
                         </div>
                     )}
 
-                    {/*TODO: filtra per categoria*/}
                     {prodotti.length > 0 ? (
                         prodotti.map((dessert) =>
                                 dessert.showToUser && (
