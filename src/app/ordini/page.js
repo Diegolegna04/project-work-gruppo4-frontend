@@ -43,35 +43,38 @@ export default function OrdiniPage() {
                 {error ? (
                     <p className={classes.error}>Error: {error}</p>
                 ) : ordine.length > 0 ? (
-                    <div className={classes.table}>
-                        <div className={`${classes.tableRow} ${classes.tableHeader}`}>
-                            <div className={classes.tableCell}>ID ordine</div>
-                            <div className={classes.tableCell}>Email</div>
-                            <div className={classes.tableCell}>Telefono</div>
-                            <div className={classes.tableCell}>Prezzo</div>
-                            <div className={classes.tableCell}>Stato ordine</div>
-                            <div className={classes.tableCell}>Azioni</div>
-                        </div>
+                    <table className={classes.table}>
+                        <thead>
+                        <tr className={classes.tr}>
+                            <th className={classes.th}>ID ordine</th>
+                            <th className={classes.th}>Email</th>
+                            <th className={classes.thTelefono}>Telefono</th>
+                            <th className={classes.thPrezzo}>Prezzo</th>
+                            <th className={classes.th}>Stato ordine</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         {ordine.map((item) => (
-                            <div key={item.id} className={classes.tableRow}>
-                                <div className={classes.tableCell} data-label="ID ordine">
+                            <tr key={item.id}>
+                                <td className={classes.td} data-label="ID ordine">
                                     {item.id}
-                                </div>
-                                <div className={classes.tableCell} data-label="Email">
+                                </td>
+                                <td className={classes.td} data-label="Email">
                                     {item.email}
-                                </div>
-                                <div className={classes.tableCell} data-label="Telefono">
+                                </td>
+                                <td className={classes.td} data-label="Telefono">
                                     {item.telephone || "Numero non inserito"}
-                                </div>
-                                <div className={classes.tableCell} data-label="Prezzo">
+                                </td>
+                                <td className={classes.td} data-label="Prezzo">
                                     {item.price}
-                                </div>
-                                <div className={classes.tableCell} data-label="Stato ordine">
+                                </td>
+                                <td className={classes.td} data-label="Stato ordine">
                                     {item.status}
-                                </div>
-                            </div>
+                                </td>
+                            </tr>
                         ))}
-                    </div>
+                        </tbody>
+                    </table>
                 ) : (
                     <h1 className={classes.emptyMessage}>
                         Non è stato effettuato alcun ordine
