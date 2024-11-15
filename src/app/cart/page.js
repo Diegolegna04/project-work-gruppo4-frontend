@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import classes from "./page.module.css";
+import swal from "sweetalert";
 
 const Cart = () => {
     const [cart, setCart] = useState([]);
@@ -67,7 +68,9 @@ const Cart = () => {
 
     const Order = async () => {
         if (!selectedDate || !selectedTime) {
-            alert("Per favore seleziona una data e un orario.");
+            await swal({
+                icon: "info",
+                text: "Per favore seleziona una data e un orario."});
             return;
         }
 
@@ -84,9 +87,13 @@ const Cart = () => {
             });
 
             if (response.ok) {
-                alert("Data e orario inviati con successo!");
+                await swal({
+                    icon: "success",
+                    text: "Data e orario inviati con successo!"});
             } else {
-                alert("Errore nell'invio della data e dell'orario.");
+                await swal({
+                    icon: "error",
+                    text: "Errore nell'invio della data e dell'orario."});
             }
         } catch (error) {
             console.error("Errore durante l'invio della data e dell'orario:", error);

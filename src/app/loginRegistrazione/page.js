@@ -92,7 +92,9 @@ const LoginSignUp = () => {
                 const message = await response.text();
                 throw new Error(message);
             }
-            await swal("Account creato con successo, controlla la mail per verificare l'account!");
+            await swal({
+                icon: "success",
+                text: "Account creato con successo, controlla la mail per verificare l'account!"});
             console.log("Signup successful!");
         } catch (error) {
             await swal({

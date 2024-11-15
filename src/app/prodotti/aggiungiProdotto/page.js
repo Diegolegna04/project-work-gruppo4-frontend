@@ -1,6 +1,7 @@
 "use client";
 import {useState} from "react";
 import classes from "./page.module.css";
+import swal from "sweetalert";
 
 const AggiungiProdotto = () => {
     const [name, setNome] = useState('');
@@ -37,7 +38,7 @@ const AggiungiProdotto = () => {
         console.log(ingredientList, name, description, price, quantity, category, image, showToUser);
 
         if (response.ok) {
-            alert("Prodotto aggiunto con successo");
+            await swal("Prodotto aggiunto con successo");
             setNome('');
             setDescription('');
             setPrice('');
@@ -46,7 +47,10 @@ const AggiungiProdotto = () => {
             setIsActive(false);
             setImmagine(null);
         } else {
-            alert("Errore durante l'aggiunta del prodotto al database" + response.status);
+            await swal( {
+                icon: "error",
+                text: "Errore durante l'aggiunta del prodotto al database"
+            });
         }
     };
 
