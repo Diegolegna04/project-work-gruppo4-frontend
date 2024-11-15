@@ -28,7 +28,11 @@
 }
 
 .thPrezzo {
-    width: 80px;
+    width: 5rem;
+}
+
+.thTelefono {
+    width: 10rem;
 }
 
 @media (max-width: 1020px) {

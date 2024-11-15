@@ -1,3 +1,4 @@
+/* Contenitore principale */
 .container {
     display: flex;
     flex-direction: column;
@@ -5,31 +6,43 @@
     margin: 2rem;
 }
 
+/* Titolo principale */
+.h2 {
+    text-align: center;
+    margin: 3rem;
+}
+
+/* Tabella ordini */
 .table {
-    display: flex;
-    flex-direction: column;
     width: 100%;
-    margin: 2rem 0;
+    border-collapse: collapse;
+    margin: 20px 0;
+    table-layout: auto;
 }
 
-.tableRow {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    border-bottom: 1px solid #ddd;
+/* Riga della tabella */
+.tr {
+    background-color: #f3bc9f;
 }
 
-.tableHeader {
-    font-weight: bold;
-    background-color: #f4f4f4;
-}
-
-.tableCell {
-    flex: 1;
-    padding: 1rem;
+/* Intestazione e celle della tabella */
+.th, .td {
     text-align: left;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
 }
 
+/* Stile per il prezzo */
+.thPrezzo {
+    width: 5rem;
+}
+
+/* Colonna telefono */
+.thTelefono {
+    width: 10rem;
+}
+
+/* Messaggio per tabella vuota */
 .emptyMessage {
     display: flex;
     justify-content: center;
@@ -38,18 +51,52 @@
     margin: 2rem 0;
 }
 
-.h2 {
-    text-align: center;
-    margin: 2rem;
+/* Stili responsivi */
+@media (max-width: 1020px) {
+    .table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .th, .td {
+        padding: 10px;
+    }
+
+    .th {
+        font-size: 14px;
+    }
+
+    .td {
+        font-size: 12px;
+    }
+
+    /* Nascondere la colonna "Telefono" */
+    .table tr td:nth-child(3),
+    .table tr th:nth-child(3) {
+        display: none;
+    }
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    .tableRow {
-        flex-direction: column;
-    }
-    .tableCell {
-        padding: 0.5rem;
-        position: relative;
-    }
+/* Stile per il menu a tendina */
+.dropDown {
+    background-color: red;
+    margin-left: 40px;
+}
+
+/* Bottone per cambiare lo stato dell'ordine */
+.changeOrderStatus {
+    background-color: #f3bc9f;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 20px;
+    transition: background-color 0.3s ease;
+}
+
+/* Stile per lista non numerata */
+.btn {
+    list-style: none;
 }
