@@ -9,6 +9,8 @@ const Cart = () => {
     const [selectedTime, setSelectedTime] = useState("");
     const [unavailableTimes, setUnavailableTimes] = useState([]);
     const [filteredAvailableTimes, setFilteredAvailableTimes] = useState([]);
+    const [loading, setLoading] = useState(false);
+
     const availableTimes = [
         "09:00", "09:10", "09:20", "09:30", "09:40", "09:50",
         "10:00", "10:10", "10:20", "10:30", "10:40", "10:50",
@@ -24,7 +26,7 @@ const Cart = () => {
 
     const getCart = async () => {
         try {
-            const response = await fetch("http://localhost:3000/cart", {
+            const response = await fetch("http://localhost:8080/cart", {
                 method: "GET",
                 credentials: "include",
                 headers: {
@@ -33,7 +35,7 @@ const Cart = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                setCart(data);
+                setCart(data.products || []); // Assuming `data` has a `products` property
             }
         } catch (error) {
             console.error(error);
@@ -41,8 +43,9 @@ const Cart = () => {
     };
 
     const getUnavailableDates = async (date) => {
+        setLoading(true);
         try {
-            const response = await fetch(`http://localhost:3000/dates?chosenDate=${date}`, {
+            const response = await fetch(`http://localhost:8080/order/dates?chosenDate=${date}`, {
                 method: "GET",
                 credentials: "include",
                 headers: {
@@ -51,17 +54,23 @@ const Cart = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                setUnavailableTimes(data); // Assume the API returns an array of unavailable times (e.g., ["09:00", "09:10"])
+                console.log("Orari non disponibili:", data); // Debug: verifica il formato dei dati
+                setUnavailableTimes(Array.isArray(data) ? data : []); // Assicurati che data sia un array
             } else {
                 console.error("Errore nella fetch: ", response.statusText);
             }
         } catch (error) {
             console.error("Errore durante la fetch:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
     const filterAvailableTimes = () => {
-        const filteredTimes = availableTimes.filter(time => !unavailableTimes.includes(time));
+        const filteredTimes = availableTimes.filter(
+            (time) => Array.isArray(unavailableTimes) && !unavailableTimes.includes(time)
+        );
+        console.log("Orari disponibili filtrati:", filteredTimes); // Debug: verifica se gli orari sono filtrati correttamente
         setFilteredAvailableTimes(filteredTimes);
     };
 
@@ -74,7 +83,7 @@ const Cart = () => {
         const formattedDateTime = `${selectedDate}T${selectedTime}:00`;
 
         try {
-            const response = await fetch("http://localhost:3000/order", {
+            const response = await fetch("http://localhost:8080/order", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -104,21 +113,27 @@ const Cart = () => {
     }, [selectedDate]);
 
     useEffect(() => {
-        filterAvailableTimes();
-    }, [unavailableTimes]);
+        if (!loading) {
+            filterAvailableTimes();
+        }
+    }, [unavailableTimes, loading]);
 
     return (
         <div className={classes.container}>
-            <h1>Cart</h1>
-            <ul className={classes.cartList}>
-                {cart.map((item, index) => (
-                    <li key={index} className={classes.cartItem}>
-                        <h2>{item.product.name}</h2>
-                        <p>Price: {item.product.price}</p>
-                        <p>Quantity: {item.quantity}</p>
-                    </li>
-                ))}
-            </ul>
+            <h1>Carrello</h1>
+            {cart.length > 0 ? (
+                <ul className={classes.cartList}>
+                    {cart.map((item, index) => (
+                        <li key={index} className={classes.cartItem}>
+                            <span>
+                                Prodotto ID: {item.idProduct} - Quantità: {item.quantity}
+                            </span>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>Il carrello è vuoto.</p>
+            )}
 
             <div className={classes.datePickerContainer}>
                 <h2>Seleziona una data per la consegna</h2>
@@ -129,7 +144,7 @@ const Cart = () => {
                     className={classes.datePicker}
                     min={new Date().toISOString().split("T")[0]} // Impedisce di selezionare date passate
                 />
-                {selectedDate && (
+                {selectedDate && !loading && (
                     <>
                         <h3>Seleziona un orario</h3>
                         <select
@@ -143,13 +158,19 @@ const Cart = () => {
                                     {time}
                                 </option>
                             ))}
+                            {unavailableTimes.map((time) => (
+                                <option key={time} value={time} disabled>
+                                    {time} (occupato)
+                                </option>
+                            ))}
                         </select>
                     </>
                 )}
+                {loading && <p>Caricamento orari disponibili...</p>}
                 <button
                     className={classes.submitButton}
                     onClick={Order}
-                    disabled={!selectedDate || !selectedTime}
+                    disabled={!selectedDate || !selectedTime || loading}
                 >
                     Conferma Data e Orario
                 </button>

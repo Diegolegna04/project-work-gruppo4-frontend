@@ -2,17 +2,19 @@
 import classes from './page.module.css';
 import {useState, useEffect} from "react";
 import Image from "next/image";
-import cartIcon from "@/img/muffin.png"
+import cartIcon from "@/img/muffin.png";
 
 const Torte = () => {
     const accessoEffettuato = localStorage.getItem('check');
     const ruolo = localStorage.getItem('ruolo');
-    const [showPhoneNumber, setShowPhoneNumber] = useState(false);
     const [prodotti, setProdotti] = useState([]);
-    const [ingredienti, setIngredienti] = useState([]);
     const [error, setError] = useState(false);
-    const [toggledIngredients, setToggledIngredients] = useState({});
+    const [quantitaSelezionata, setQuantitaSelezionata] = useState({});
+    const [carrello, setCarrello] = useState(null);
+    const [showCarrello, setShowCarrello] = useState(false);
+    const [numeroProdottiDiversi, setNumeroProdottiDiversi] = useState(0);
 
+    // Fetch dei prodotti dal server
     const fetchProdotti = async () => {
         try {
             const response = await fetch('http://localhost:8080/products', {
@@ -33,28 +35,22 @@ const Torte = () => {
         }
     };
 
-
-    const [quantitaSelezionata, setQuantitaSelezionata] = useState({});
-    const [carrello, setCarrello] = useState([]);
-    const [showCarrello, setShowCarrello] = useState(false);
-
-    let numeroProdottiDiversi = 0;
-
+    // Fetch del carrello dal server
     const showCart = async () => {
         try {
             const response = await fetch("http://localhost:8080/cart", {
                 method: "GET",
-                credentials: "include", // Necessario per includere il cookie di sessione
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
 
             if (response.ok) {
-                const data = await response.json(); // Assumi che il server restituisca il carrello come JSON
-                numeroProdottiDiversi = data.products.length;
-                setCarrello(data); // Aggiorna lo stato locale del carrello
-                console.log("Carrello caricato con successo." + JSON.stringify(data, null, 2));
+                const data = await response.json();
+                setCarrello(data); // Aggiorna lo stato locale con l'intero oggetto carrello
+                setNumeroProdottiDiversi(data.products.length); // Aggiorna il numero di prodotti diversi nel carrello
+                console.log("Carrello caricato con successo:", JSON.stringify(data, null, 2));
             } else {
                 console.error("Errore nella risposta dal server:", response.statusText);
             }
@@ -63,7 +59,7 @@ const Torte = () => {
         }
     };
 
-
+    // Aggiungi prodotto al carrello
     const CartToCart = async (idProduct, quantity) => {
         try {
             const body = {
@@ -83,6 +79,7 @@ const Torte = () => {
             console.log("Richiesta inviata con dati:", JSON.stringify(body));
             if (response.ok) {
                 console.log("Carrello aggiornato con successo lato server.");
+                await showCart(); // Ricarica il carrello dopo l'aggiornamento
             } else {
                 console.log("Errore nella risposta dal server:", response.statusText);
             }
@@ -95,7 +92,6 @@ const Torte = () => {
     const toggleCarrello = () => {
         setShowCarrello((prev) => !prev);
     };
-
 
     // Incrementa la quantità selezionata
     const incrementaQuantita = (id, maxQuantity) => {
@@ -113,28 +109,6 @@ const Torte = () => {
         }));
     };
 
-    const decrementaProdottoCarrello = (id) => {
-        setCarrello((prevCarrello) =>
-            prevCarrello
-                .map((item) =>
-                    item.id === id
-                        ? {...item, quantita: item.quantita - 1}
-                        : item
-                )
-                .filter((item) => item.quantita > 0) // Rimuove il prodotto se la quantità è 0
-        );
-    };
-
-    const incrementaProdottoCarrello = (id, maxQuantita) => {
-        setCarrello((prevCarrello) =>
-            prevCarrello.map((item) =>
-                item.id === id && item.quantita < maxQuantita
-                    ? {...item, quantita: item.quantita + 1}
-                    : item
-            )
-        );
-    };
-
     const rimuoviProdottoCarrello = async (idProdotto) => {
         try {
             const response = await fetch(`http://localhost:8080/cart/remove/${idProdotto}`, {
@@ -146,9 +120,7 @@ const Torte = () => {
             });
 
             if (response.ok) {
-                setCarrello((prevCarrello) =>
-                    prevCarrello.filter((item) => item.id !== idProdotto)
-                );
+                await showCart(); // Ricarica il carrello dopo la rimozione
                 console.log("Prodotto rimosso dal carrello.");
             } else {
                 console.error("Errore nella risposta dal server:", response.statusText);
@@ -158,17 +130,10 @@ const Torte = () => {
         }
     };
 
-
+    // Ottieni il percorso dell'immagine
     function getImagePath(filePath) {
         const parts = filePath.split('/');
-
-        // Ritorna i componenti dal terzultimo elemento in poi uniti nuovamente con "/"
         return parts.slice(parts.length - 1);
-        // return '/' + parts.slice(parts.length - 3).join('/');
-    }
-
-    const cart = async () => {
-        window.location.href = "/cart";
     }
 
     useEffect(() => {
@@ -176,18 +141,15 @@ const Torte = () => {
         fetchProdotti();
     }, []);
 
-
     return (
         <div className={classes.container}>
             <title>Prodotti</title>
             <div className={classes.header}>
                 <h1>I nostri prodotti</h1>
 
-
-
                 <div className={classes.containerP}>
                     <button className={classes.carrelloIcon} onClick={toggleCarrello}>
-                        <Image src={cartIcon} alt={carrello} className={classes.muffinIcon}/>
+                        <Image src={cartIcon} alt="Carrello" className={classes.muffinIcon}/>
                         <span className={classes.cartQuantity}>
                             {numeroProdottiDiversi}
                         </span>
@@ -196,29 +158,28 @@ const Torte = () => {
                     {showCarrello && (
                         <div className={classes.carrello}>
                             <h3>Carrello</h3>
-                            {carrello.length > 0 ? (
+                            {carrello && carrello.products && carrello.products.length > 0 ? (
                                 <ul>
-                                    {carrello.map((item) => (
-                                        <li key={item.id} className={classes.carrelloItem}>
-                                             <span>
-                                                 {item.name} - €{item.price}
-                                             </span>
+                                    {carrello.products.map((item) => (
+                                        <li key={item.idProduct} className={classes.carrelloItem}>
+                                            <span>
+                                                Prodotto ID: {item.idProduct} - Quantità: {item.quantity}
+                                            </span>
                                             <div className={classes.carrelloControls}>
                                                 <button
-                                                    onClick={() => decrementaProdottoCarrello(item.idProduct)}
+                                                    onClick={() => decrementaQuantita(item.idProduct)}
                                                     disabled={item.quantity === 1}
                                                 >
                                                     -
                                                 </button>
-                                                <span>{item.quantita}</span>
+                                                <span>{item.quantity}</span>
                                                 <button
-                                                    onClick={() => incrementaProdottoCarrello(item.id, item.maxQuantita)}
-                                                    disabled={item.quantita === item.maxQuantita}
+                                                    onClick={() => incrementaQuantita(item.idProduct)}
                                                 >
                                                     +
                                                 </button>
                                                 <button
-                                                    onClick={() => rimuoviProdottoCarrello(item.id)}
+                                                    onClick={() => rimuoviProdottoCarrello(item.idProduct)}
                                                     className={classes.removeButton}
                                                 >
                                                     🗑 Rimuovi
@@ -227,7 +188,7 @@ const Torte = () => {
                                         </li>
                                     ))}
                                     <li>
-                                        <button onClick={cart}>Conferma il tuo ordine</button>
+                                        <button onClick={() => window.location.href = "/cart"}>Conferma il tuo ordine</button>
                                     </li>
                                 </ul>
                             ) : (
@@ -241,7 +202,6 @@ const Torte = () => {
                                 dessert.showToUser && (
                                     <div key={dessert.id} className={classes.containerText}>
                                         <h2>{dessert.name}</h2>
-
                                         <Image
                                             className={classes.img}
                                             src={`/prodotti/${getImagePath(dessert.image)}`}
@@ -249,10 +209,8 @@ const Torte = () => {
                                             height={200}
                                             alt={dessert.name}
                                         />
-
                                         <p>Prezzo: €{dessert.price}</p>
                                         <p>Quantità disponibile: {dessert.quantity}</p>
-
                                         <div className={classes.quantityControls}>
                                             <button
                                                 onClick={() => decrementaQuantita(dessert.id)}
@@ -268,7 +226,6 @@ const Torte = () => {
                                                 +
                                             </button>
                                         </div>
-
                                         <button
                                             onClick={() => CartToCart(dessert.id, quantitaSelezionata[dessert.id])}
                                             disabled={!quantitaSelezionata[dessert.id] || quantitaSelezionata[dessert.id] === 0}
@@ -281,8 +238,6 @@ const Torte = () => {
                     ) : (
                         <p className={classes.noProducts}>Nessun prodotto disponibile al momento</p>
                     )}
-
-
 
                     {accessoEffettuato && ruolo === "Admin" && (
                         <div className={classes.addCardContainer}>

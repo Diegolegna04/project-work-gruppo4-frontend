@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { Button } from "@nextui-org/react";
@@ -29,7 +30,6 @@ export default function GestioneOrdiniPage() {
                 },
             });
             if (!response.ok) throw new Error("Errore nella risposta di rete");
-
             const result = await response.json();
             setOrdini(result);
             console.log("Ordini recuperati:", result);
@@ -43,7 +43,7 @@ export default function GestioneOrdiniPage() {
         try {
             const acceptOrder = {
                 orderId: ordine.id,
-                accepted: newStatus === "Accepted",
+                accepted: newStatus === "Accettato",
             };
             const response = await fetch("http://localhost:8080/order", {
                 method: "PUT",
@@ -54,7 +54,6 @@ export default function GestioneOrdiniPage() {
                 body: JSON.stringify(acceptOrder),
             });
             if (!response.ok) throw new Error("Impossibile aggiornare lo stato dell'ordine");
-
             setOrdini((prevOrdini) =>
                 prevOrdini.map((item) =>
                     item.id === ordine.id ? { ...item, status: newStatus } : item
@@ -116,7 +115,7 @@ export default function GestioneOrdiniPage() {
                                         <button
                                             className={classes.changeOrderStatus}
                                             onClick={() => openModal(item)}
-                                            disabled={item.status === "Accepted" || item.status === "Rejected"}
+                                            disabled={item.status === "Accettato" || item.status === "Rifiutato"}
                                         >
                                             Modifica
                                         </button>
@@ -146,14 +145,14 @@ export default function GestioneOrdiniPage() {
                     <h2>Modifica Stato Ordine</h2>
                     <div>
                         <button
-                            className={`${classes.optionButton} ${newStatus === "Accepted" ? classes.selected : ""}`}
-                            onClick={() => setNewStatus("Accepted")}
+                            className={`${classes.optionButton} ${newStatus === "Accettato" ? classes.selected : ""}`}
+                            onClick={() => setNewStatus("Accettato")}
                         >
                             Accetta ordine
                         </button>
                         <button
-                            className={`${classes.optionButton} ${newStatus === "Rejected" ? classes.selected : ""}`}
-                            onClick={() => setNewStatus("Rejected")}
+                            className={`${classes.optionButton} ${newStatus === "Rifiutato" ? classes.selected : ""}`}
+                            onClick={() => setNewStatus("Rifiutato")}
                         >
                             Rifiuta ordine
                         </button>
