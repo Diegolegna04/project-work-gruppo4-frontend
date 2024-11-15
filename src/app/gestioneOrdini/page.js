@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { Button } from "@nextui-org/react";
@@ -30,6 +29,7 @@ export default function GestioneOrdiniPage() {
                 },
             });
             if (!response.ok) throw new Error("Errore nella risposta di rete");
+
             const result = await response.json();
             setOrdini(result);
             console.log("Ordini recuperati:", result);
@@ -54,6 +54,7 @@ export default function GestioneOrdiniPage() {
                 body: JSON.stringify(acceptOrder),
             });
             if (!response.ok) throw new Error("Impossibile aggiornare lo stato dell'ordine");
+
             setOrdini((prevOrdini) =>
                 prevOrdini.map((item) =>
                     item.id === ordine.id ? { ...item, status: newStatus } : item
@@ -101,6 +102,7 @@ export default function GestioneOrdiniPage() {
                                 <th className={classes.thTelefono}>Telefono</th>
                                 <th className={classes.thPrezzo}>Prezzo</th>
                                 <th className={classes.th}>Stato ordine</th>
+                                <th className={classes.th}>Azione</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -110,8 +112,8 @@ export default function GestioneOrdiniPage() {
                                     <td className={classes.td}>{item.email || "Email non inserita"}</td>
                                     <td className={classes.td}>{item.telefono || "Numero non inserito"}</td>
                                     <td className={classes.td}>{item.price}</td>
+                                    <td className={classes.td}>{item.status}</td>
                                     <td className={classes.td}>
-                                        {item.status}
                                         <button
                                             className={classes.changeOrderStatus}
                                             onClick={() => openModal(item)}
