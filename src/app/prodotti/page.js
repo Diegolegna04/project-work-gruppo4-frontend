@@ -38,6 +38,8 @@ const Torte = () => {
     const [carrello, setCarrello] = useState([]);
     const [showCarrello, setShowCarrello] = useState(false);
 
+    let numeroProdottiDiversi = 0;
+
     const showCart = async () => {
         try {
             const response = await fetch("http://localhost:8080/cart", {
@@ -50,8 +52,9 @@ const Torte = () => {
 
             if (response.ok) {
                 const data = await response.json(); // Assumi che il server restituisca il carrello come JSON
+                numeroProdottiDiversi = data.products.length;
                 setCarrello(data); // Aggiorna lo stato locale del carrello
-                console.log("Carrello caricato con successo.");
+                console.log("Carrello caricato con successo." + JSON.stringify(data, null, 2));
             } else {
                 console.error("Errore nella risposta dal server:", response.statusText);
             }
@@ -62,22 +65,26 @@ const Torte = () => {
 
 
     const CartToCart = async (idProduct, quantity) => {
-
         try {
-            const response = await fetch("http://localhost:8080/cart/add", {
+            const body = {
+                idProduct: idProduct,
+                quantity: quantity,
+            };
+
+            const response = await fetch("http://localhost:8080/cart", {
                 method: "POST",
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(idProduct, quantity)
+                body: JSON.stringify(body)
             });
 
-            console.log("id " + idProduct, "quantity" + quantity);
+            console.log("Richiesta inviata con dati:", JSON.stringify(body));
             if (response.ok) {
                 console.log("Carrello aggiornato con successo lato server.");
             } else {
-                console.error("Errore nella risposta dal server:", response.statusText);
+                console.log("Errore nella risposta dal server:", response.statusText);
             }
         } catch (error) {
             console.error("Errore nella fetch per aggiornare il carrello:", error);
@@ -176,11 +183,13 @@ const Torte = () => {
             <div className={classes.header}>
                 <h1>I nostri prodotti</h1>
 
+
+
                 <div className={classes.containerP}>
                     <button className={classes.carrelloIcon} onClick={toggleCarrello}>
                         <Image src={cartIcon} alt={carrello} className={classes.muffinIcon}/>
                         <span className={classes.cartQuantity}>
-                            {carrello.reduce((acc, item) => acc + item.quantita, 0)}
+                            {numeroProdottiDiversi}
                         </span>
                     </button>
 
@@ -196,8 +205,8 @@ const Torte = () => {
                                              </span>
                                             <div className={classes.carrelloControls}>
                                                 <button
-                                                    onClick={() => decrementaProdottoCarrello(item.id)}
-                                                    disabled={item.quantita === 1}
+                                                    onClick={() => decrementaProdottoCarrello(item.idProduct)}
+                                                    disabled={item.quantity === 1}
                                                 >
                                                     -
                                                 </button>
@@ -261,7 +270,7 @@ const Torte = () => {
                                         </div>
 
                                         <button
-                                            onClick={() => CartToCart(dessert.id, quantitaSelezionata[dessert.id] || 0)}
+                                            onClick={() => CartToCart(dessert.id, quantitaSelezionata[dessert.id])}
                                             disabled={!quantitaSelezionata[dessert.id] || quantitaSelezionata[dessert.id] === 0}
                                         >
                                             Aggiungi al carrello
