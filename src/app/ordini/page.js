@@ -69,14 +69,6 @@ export default function OrdiniPage() {
                                 <div className={classes.tableCell} data-label="Stato ordine">
                                     {item.status}
                                 </div>
-                                <div className={classes.tableCell} data-label="Azioni">
-                                    <button
-                                        className={classes.detailsButton}
-                                        onClick={() => router.push(`/ordini/${item.id}`)}
-                                    >
-                                        Mostra Dettagli
-                                    </button>
-                                </div>
                             </div>
                         ))}
                     </div>

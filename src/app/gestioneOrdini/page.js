@@ -99,10 +99,9 @@ export default function GestioneOrdiniPage() {
                             <tr className={classes.tr}>
                                 <th className={classes.th}>ID ordine</th>
                                 <th className={classes.th}>Email</th>
-                                <th className={classes.th}>Telefono</th>
+                                <th className={classes.thTelefono}>Telefono</th>
                                 <th className={classes.thPrezzo}>Prezzo</th>
                                 <th className={classes.th}>Stato ordine</th>
-                                <th className={classes.th}>Dettagli ordine</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -110,7 +109,7 @@ export default function GestioneOrdiniPage() {
                                 <tr key={item.id}>
                                     <td className={classes.td}>{item.id}</td>
                                     <td className={classes.td}>{item.email || "Email non inserita"}</td>
-                                    <td className={classes.td}>{item.telephone || "Numero non inserito"}</td>
+                                    <td className={classes.td}>{item.telefono || "Numero non inserito"}</td>
                                     <td className={classes.td}>{item.price}</td>
                                     <td className={classes.td}>
                                         {item.status}
@@ -121,11 +120,6 @@ export default function GestioneOrdiniPage() {
                                         >
                                             Modifica
                                         </button>
-                                    </td>
-                                    <td className={classes.td}>
-                                        <Link href={`/gestioneOrdini/${item.id}`}>
-                                            <Button className={classes.changeOrderStatus}>Visualizza dettagli</Button>
-                                        </Link>
                                     </td>
                                 </tr>
                             ))}

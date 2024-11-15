@@ -38,14 +38,13 @@ export default function Footer() {
                     <div className={classes.orari}>
                         <div className={classes.giorni}>
                             <p>Lunedì</p>
-                            <p>Mar - Sab</p>
+                            <p>Mar - Sab</p><br/>
                             <p>Domenica</p>
                         </div>
                         <div className={classes.ora}>
                             <p>Chiuso</p>
-                            <p>7:30 - 13:00</p>
-                            <p>14:30 - 16:00</p>
-                            <p>2:00 - 12:30</p>
+                            <p>&nbsp;&nbsp;7:30 - 13:00<br />14:30 - 16:00</p>
+                            <p>8:00 - 12:30</p>
                         </div>
                     </div>
                 </div>
